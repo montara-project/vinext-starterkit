@@ -8,7 +8,7 @@ import {
   IconSettings,
   IconShield,
   IconStack2,
-  IconUsers
+  IconUsers,
 } from '@tabler/icons-react'
 
 import { NavMainItem, Role, SidebarMenuData, TeamItem } from '@/types/menu'
