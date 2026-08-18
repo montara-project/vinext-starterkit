@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  "jsPlugins": ["eslint-plugin-perfectionist"],
+  "rules": {
+    "perfectionist/sort-imports": [
+      "error",
+      {
+        "type": "natural",
+        "order": "asc"
+      }
+    ]
+  },
+  "env": {
+    "builtin": true
+  },
+  "ignorePatterns": [
+    "next-env.d.ts",
+    "tsconfig.tsbuildinfo",
+    ".next",
+    "dist",
+    ".wrangler",
+    ".vinext"
+  ]
+}
