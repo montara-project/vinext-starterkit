@@ -12,5 +12,5 @@ export enum AUTH_ERROR_TYPE {
 
 export enum AUTH_PROVIDER {
   GOOGLE = 'google',
-  GITHUB = 'github',
+  CUSTOM = 'custom',
 }

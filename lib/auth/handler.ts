@@ -1,13 +1,53 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
+import { AuthSession } from '@/types/auth'
+
+import { Models } from '../api/models'
 import { AUTH_PROVIDER } from '../constants/auth'
 import { auth } from './auth-server'
 
 /**
+ * Map a google user into our backend `Models.User` shape so both auth
+ * paths (email/password backend and google) return a consistent
+ * `AuthSession`.
+ */
+function mapBetterAuthUser(user: {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  email: string
+  emailVerified: boolean
+  name: string
+  image?: string | null
+}): Models.User {
+  return {
+    id: user.id,
+    created_at: user.createdAt.toISOString(),
+    updated_at: user.updatedAt.toISOString(),
+    deleted_at: null,
+    fullname: user.name,
+    email: user.email,
+    phone: null,
+    token_verify: null,
+    address: null,
+    is_active: user.emailVerified,
+    is_blocked: false,
+    role_id: '',
+    role: {
+      id: '',
+      name: '',
+      created_at: user.createdAt.toISOString(),
+      updated_at: user.updatedAt.toISOString(),
+      deleted_at: null,
+    },
+  }
+}
+
+/**
  * Require authentication and redirect to home page if not authenticated
  */
-export async function requireSession() {
+export async function requireSession(): Promise<AuthSession> {
   const google = await getAccessToken()
 
   // Remove this comment to get Access Token
@@ -29,7 +69,11 @@ export async function requireSession() {
     throw redirect('/sign-in')
   }
 
-  return { ...session, data: google }
+  return {
+    ...session,
+    user: mapBetterAuthUser(session.user),
+    data: google,
+  }
 }
 
 /**
@@ -51,7 +95,11 @@ export async function getSession() {
     return null
   }
 
-  return { ...session, data: google }
+  return {
+    ...session,
+    user: mapBetterAuthUser(session.user),
+    data: google,
+  }
 }
 
 /**

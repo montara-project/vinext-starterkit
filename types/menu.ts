@@ -5,6 +5,7 @@ export type Role = 'editor' | 'admin' | 'viewer'
 export type NavSubItem = {
   title: string
   url: string
+  icon?: typeof IconCheck
 }
 
 export type NavMainItem = {
@@ -18,7 +19,7 @@ export type NavMainItem = {
 export type ProjectItem = {
   name: string
   url: string
-  icon: React.ComponentType<{ className?: string }>
+  icon: typeof IconCheck
 }
 
 export type TeamItem = {

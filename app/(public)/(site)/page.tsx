@@ -1,3 +1,7 @@
+import { Metadata } from 'next'
+
+import { META } from '@/lib/constants/meta'
+
 const links = [
   {
     href: 'https://github.com/cloudflare/vinext',
@@ -8,6 +12,11 @@ const links = [
     label: 'Workers',
   },
 ]
+
+export const metadata: Metadata = {
+  ...META,
+  title: 'Home | Vinext Starterkit',
+}
 
 export const revalidate = 300
 

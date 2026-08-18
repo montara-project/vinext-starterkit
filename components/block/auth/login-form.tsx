@@ -53,13 +53,6 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
                 Continue with Google
               </Button>
             </Field>
-
-            <Field>
-              <Button variant="outline" type="button">
-                <Icons.twitter />
-                Continue with Twitter
-              </Button>
-            </Field>
           </div>
         </FieldGroup>
       </form>
