@@ -15,6 +15,7 @@
     "fmt:init": "oxfmt --init",
     "fmt:check": "oxfmt --check",
     "typecheck": "tsc --noEmit",
+    "doctor": "npx react-doctor@latest",
     "predeploy": "npm run build",
     "deploy": "vinext-cloudflare deploy --config dist/server/wrangler.json",
     "preview": "npm run build && npm run start --",
