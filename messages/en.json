@@ -94,8 +94,14 @@
     "permissions": { "title": "Permissions", "subtitle": "View role-permission assignments" },
     "comments": { "title": "Comments", "subtitle": "Review and moderate comments" },
     "analytics": { "title": "Analytics", "subtitle": "Overview of your site performance" },
-    "settingsGeneral": { "title": "General Settings", "subtitle": "Configure the basic information of your site" },
+    "settingsGeneral": {
+      "title": "General Settings",
+      "subtitle": "Configure the basic information of your site"
+    },
     "settingsSeo": { "title": "SEO Settings", "subtitle": "Optimize your site for search engines" },
-    "settingsAppearance": { "title": "Appearance", "subtitle": "Customize the look and feel of your site" }
+    "settingsAppearance": {
+      "title": "Appearance",
+      "subtitle": "Customize the look and feel of your site"
+    }
   }
 }

@@ -58,7 +58,9 @@ export default function AppSidebar({ auth, role = 'editor', ...props }: AppSideb
       <SidebarContent>
         <NavMain title={t('platform')} items={menu.navMain} />
 
-        {menu.navMarketing.length > 0 && <NavMain title={t('marketing')} items={menu.navMarketing} />}
+        {menu.navMarketing.length > 0 && (
+          <NavMain title={t('marketing')} items={menu.navMarketing} />
+        )}
         {menu.navSetting.length > 0 && <NavMain title={t('settings')} items={menu.navSetting} />}
       </SidebarContent>
       <SidebarFooter>

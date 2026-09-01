@@ -80,12 +80,7 @@ export function MediaUpload() {
           className="hidden"
           onChange={(e) => addFiles(e.target.files)}
         />
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={() => inputRef.current?.click()}
-        >
+        <Button type="button" variant="outline" size="sm" onClick={() => inputRef.current?.click()}>
           Browse files
         </Button>
       </div>

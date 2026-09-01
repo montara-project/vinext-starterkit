@@ -106,7 +106,7 @@
     "tailwindcss": "latest",
     "typescript": "latest",
     "vite": "latest",
-    "wrangler": "^4.123.0"
+    "wrangler": "^4.127.1"
   },
   "packageManager": "pnpm@11.10.0"
 }

@@ -22,9 +22,7 @@ export default async function DashboardPage() {
           {user.fullname.charAt(0).toUpperCase()}
         </div>
         <div>
-          <h1 className="text-2xl font-semibold">
-            {t('welcome', { name: user.fullname })}
-          </h1>
+          <h1 className="text-2xl font-semibold">{t('welcome', { name: user.fullname })}</h1>
           <p className="text-muted-foreground text-sm">{user.email}</p>
         </div>
       </div>

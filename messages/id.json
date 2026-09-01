@@ -87,15 +87,27 @@
     "pages": { "title": "Halaman", "subtitle": "Kelola halaman statis" },
     "categories": { "title": "Kategori", "subtitle": "Kelola kategori konten" },
     "tags": { "title": "Tag", "subtitle": "Kelola tag konten" },
-    "mediaLibrary": { "title": "Pustaka Media", "subtitle": "Jelajahi dan kelola media yang diunggah" },
+    "mediaLibrary": {
+      "title": "Pustaka Media",
+      "subtitle": "Jelajahi dan kelola media yang diunggah"
+    },
     "mediaUpload": { "title": "Unggah Media", "subtitle": "Unggah file media baru ke pustaka" },
     "users": { "title": "Pengguna", "subtitle": "Kelola pengguna sistem dan perannya" },
     "roles": { "title": "Peran", "subtitle": "Kelola peran pengguna" },
     "permissions": { "title": "Izin", "subtitle": "Lihat penugasan izin peran" },
     "comments": { "title": "Komentar", "subtitle": "Tinjau dan moderasi komentar" },
     "analytics": { "title": "Analitik", "subtitle": "Ringkasan performa situs Anda" },
-    "settingsGeneral": { "title": "Pengaturan Umum", "subtitle": "Konfigurasi informasi dasar situs Anda" },
-    "settingsSeo": { "title": "Pengaturan SEO", "subtitle": "Optimalkan situs untuk mesin pencari" },
-    "settingsAppearance": { "title": "Tampilan", "subtitle": "Sesuaikan tampilan dan nuansa situs Anda" }
+    "settingsGeneral": {
+      "title": "Pengaturan Umum",
+      "subtitle": "Konfigurasi informasi dasar situs Anda"
+    },
+    "settingsSeo": {
+      "title": "Pengaturan SEO",
+      "subtitle": "Optimalkan situs untuk mesin pencari"
+    },
+    "settingsAppearance": {
+      "title": "Tampilan",
+      "subtitle": "Sesuaikan tampilan dan nuansa situs Anda"
+    }
   }
 }

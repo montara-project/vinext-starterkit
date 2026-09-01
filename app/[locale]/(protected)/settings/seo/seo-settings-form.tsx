@@ -65,11 +65,7 @@ export function SeoSettingsForm() {
         <Field>
           <FieldLabel htmlFor="indexing">Indexing</FieldLabel>
           <div className="flex items-center gap-2">
-            <Switch
-              id="indexing"
-              checked={indexing}
-              onCheckedChange={setIndexing}
-            />
+            <Switch id="indexing" checked={indexing} onCheckedChange={setIndexing} />
             <span className="text-sm text-muted-foreground">
               Allow search engines to index this site
             </span>

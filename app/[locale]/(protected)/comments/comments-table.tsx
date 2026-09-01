@@ -67,16 +67,12 @@ export function CommentsTable() {
     {
       accessorKey: 'authorName',
       header: 'Author',
-      cell: ({ row }) => (
-        <span className="font-medium">{row.original.authorName}</span>
-      ),
+      cell: ({ row }) => <span className="font-medium">{row.original.authorName}</span>,
     },
     {
       accessorKey: 'authorEmail',
       header: 'Email',
-      cell: ({ row }) => (
-        <span className="text-muted-foreground">{row.original.authorEmail}</span>
-      ),
+      cell: ({ row }) => <span className="text-muted-foreground">{row.original.authorEmail}</span>,
     },
     {
       accessorKey: 'postId',
@@ -113,9 +109,7 @@ export function CommentsTable() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() =>
-                updateMutation.mutate({ id: row.original.id, status: 'approved' })
-              }
+              onClick={() => updateMutation.mutate({ id: row.original.id, status: 'approved' })}
             >
               <Check className="size-4" />
               <span className="sr-only">Approve {row.original.id}</span>

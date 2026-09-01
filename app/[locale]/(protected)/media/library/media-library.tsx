@@ -60,60 +60,60 @@ export function MediaLibrary() {
       loadingMessage="Loading media..."
       emptyMessage="No media found. Upload your first file."
     >
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {items.map((item) => (
-        <div key={item.id} className="rounded-lg border bg-background p-4 shadow-sm">
-          <div className="flex h-32 items-center justify-center rounded-md bg-muted">
-            {item.url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.url} alt={item.name} className="h-full w-full object-cover" />
-            ) : (
-              <ImageIcon className="text-muted-foreground size-8" />
-            )}
-          </div>
-          <div className="mt-3 flex items-start justify-between gap-2">
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{item.name}</p>
-              <p className="text-muted-foreground text-xs">{item.type}</p>
-              <p className="text-muted-foreground text-xs">
-                {formatSize(item.size)} &middot; {formatDate(item.createdAt)}
-              </p>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {items.map((item) => (
+          <div key={item.id} className="rounded-lg border bg-background p-4 shadow-sm">
+            <div className="flex h-32 items-center justify-center rounded-md bg-muted">
+              {item.url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={item.url} alt={item.name} className="h-full w-full object-cover" />
+              ) : (
+                <ImageIcon className="text-muted-foreground size-8" />
+              )}
             </div>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => setDeleting(item)}
-                >
-                  <Trash2 className="size-4" />
-                  <span className="sr-only">Delete {item.name}</span>
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Delete media</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Are you sure you want to delete &ldquo;{deleting?.name}&rdquo;? This action cannot be
-                    undone.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                    onClick={() => deleteMutation.mutate(deleting?.id ?? '')}
+            <div className="mt-3 flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium">{item.name}</p>
+                <p className="text-muted-foreground text-xs">{item.type}</p>
+                <p className="text-muted-foreground text-xs">
+                  {formatSize(item.size)} &middot; {formatDate(item.createdAt)}
+                </p>
+              </div>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-destructive hover:text-destructive"
+                    onClick={() => setDeleting(item)}
                   >
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+                    <Trash2 className="size-4" />
+                    <span className="sr-only">Delete {item.name}</span>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete media</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Are you sure you want to delete &ldquo;{deleting?.name}&rdquo;? This action
+                      cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                      onClick={() => deleteMutation.mutate(deleting?.id ?? '')}
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
     </DataStateWrapper>
   )
 }

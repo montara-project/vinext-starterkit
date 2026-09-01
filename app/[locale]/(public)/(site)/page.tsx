@@ -32,36 +32,24 @@ export default async function Home() {
           <h1 className="max-w-2xl text-4xl font-semibold leading-tight sm:text-5xl">
             {t('heroTitle')}
           </h1>
-          <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
-            {t('heroSubtitle')}
-          </p>
+          <p className="max-w-2xl text-lg leading-8 text-muted-foreground">{t('heroSubtitle')}</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="rounded-lg border bg-card p-5">
             <h2 className="font-semibold">{t('develop')}</h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              {t('developDesc')}
-            </p>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">{t('developDesc')}</p>
             <code className="mt-4 block rounded bg-muted px-3 py-2 text-sm">pnpm run dev</code>
           </div>
           <div className="rounded-lg border bg-card p-5">
             <h2 className="font-semibold">{t('build')}</h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              {t('buildDesc')}
-            </p>
-            <code className="mt-4 block rounded bg-muted px-3 py-2 text-sm">
-              pnpm run build
-            </code>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">{t('buildDesc')}</p>
+            <code className="mt-4 block rounded bg-muted px-3 py-2 text-sm">pnpm run build</code>
           </div>
           <div className="rounded-lg border bg-card p-5">
             <h2 className="font-semibold">{t('deploy')}</h2>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              {t('deployDesc')}
-            </p>
-            <code className="mt-4 block rounded bg-muted px-3 py-2 text-sm">
-              pnpm run deploy
-            </code>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">{t('deployDesc')}</p>
+            <code className="mt-4 block rounded bg-muted px-3 py-2 text-sm">pnpm run deploy</code>
           </div>
         </div>
 
