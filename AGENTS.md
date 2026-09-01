@@ -1,16 +1,18 @@
 # AGENTS.md
 
 This starterkit deploys to a single Cloudflare Worker on the **free plan**. The
-free tier is a hard budget that every feature must respect. Treat these limits
-as product requirements, not trivia.
+free tier is a hard budget that every feature must optimize for — but if a
+feature is genuinely well-optimized and still must exceed the free limits
+(e.g., a busy public site), it is acceptable. These rules exist to prevent
+wasteful defaults, not to cap ambition.
 
 ## The budget (per account, not per worker)
 
-| Resource | Free limit | Counts against it |
-|----------|-----------|-------------------|
-| Workers | 100,000 requests/day, 10ms CPU per request | Every request to the Worker: page loads, API calls, auth callbacks, asset requests served by the Worker, cron triggers |
-| D1 | 5 GB storage, 5M reads/day, 100k writes/day | Every `prepare()` executed |
-| R2 | 10 GB storage, 1M Class A ops/month, 10M Class B ops/month | `put`/`get`/`list` (Class B = reads), deletes (Class A) |
+| Resource | Free limit                                                 | Counts against it                                                                                                      |
+| -------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Workers  | 100,000 requests/day, 10ms CPU per request                 | Every request to the Worker: page loads, API calls, auth callbacks, asset requests served by the Worker, cron triggers |
+| D1       | 5 GB storage, 5M reads/day, 100k writes/day                | Every `prepare()` executed                                                                                             |
+| R2       | 10 GB storage, 1M Class A ops/month, 10M Class B ops/month | `put`/`get`/`list` (Class B = reads), deletes (Class A)                                                                |
 
 All Workers in one account share the 100k/day pool. One app is fine; do not
 build as if the budget were infinite.
