@@ -1,7 +1,7 @@
 'use client'
 
 import { GalleryVerticalEnd } from 'lucide-react'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -13,12 +13,14 @@ import {
   FieldSeparator,
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { Link } from '@/i18n/navigation'
 import { authClient, signInWithGoogle } from '@/lib/auth/auth-client'
 import { cn } from '@/lib/utils'
 
 import { Icons } from '../common/icons'
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
+  const t = useTranslations('auth')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -40,26 +42,26 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
               <div className="flex size-8 items-center justify-center rounded-md">
                 <GalleryVerticalEnd className="size-6" />
               </div>
-              <span className="sr-only">Vinext Starterkit</span>
+              <span className="sr-only">{t('branding')}</span>
             </a>
-            <h1 className="text-xl font-bold">Welcome to Vinext Starterkit</h1>
+            <h1 className="text-xl font-bold">{t('welcome')}</h1>
             <FieldDescription>
-              Don&apos;t have an account? <Link href="/sign-up">Sign up</Link>
+              {t('dontHaveAccount')} <Link href="/sign-up">{t('signUp')}</Link>
             </FieldDescription>
           </div>
           <Field>
-            <FieldLabel htmlFor="email">Email</FieldLabel>
+            <FieldLabel htmlFor="email">{t('email')}</FieldLabel>
             <Input
               id="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder={t('emailPlaceholder')}
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </Field>
           <Field>
-            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <FieldLabel htmlFor="password">{t('password')}</FieldLabel>
             <Input
               id="password"
               type="password"
@@ -70,23 +72,23 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
             />
           </Field>
           <Field>
-            <Button type="submit">Login</Button>
+            <Button type="submit">{t('login')}</Button>
           </Field>
-          <FieldSeparator>Or</FieldSeparator>
+          <FieldSeparator>{t('or')}</FieldSeparator>
 
           <div className="space-y-4">
             <Field>
               <Button variant="outline" type="button" onClick={handleSignInGoogle}>
                 <Icons.googleColorful className="size-6" />
-                Continue with Google
+                {t('continueWithGoogle')}
               </Button>
             </Field>
           </div>
         </FieldGroup>
       </form>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
-        <a href="#">Privacy Policy</a>.
+        {t('terms')} <a href="#">{t('termsOfService')}</a> {t('and')}{' '}
+        <a href="#">{t('privacyPolicy')}</a>.
       </FieldDescription>
     </div>
   )

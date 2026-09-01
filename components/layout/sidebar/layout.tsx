@@ -1,7 +1,5 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import React from 'react'
 
 import {
@@ -14,6 +12,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import { Link, usePathname } from '@/i18n/navigation'
 import { capitalizeFirstLetter } from '@/lib/string'
 import { AuthSession } from '@/types/auth'
 
