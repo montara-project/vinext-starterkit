@@ -7,7 +7,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
   return (
     <>
       <PublicHeader />
-      <main>{children}</main>
+      {children}
       <PublicFooter />
     </>
   )
