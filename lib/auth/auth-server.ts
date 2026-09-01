@@ -4,6 +4,7 @@ import { nextCookies } from 'better-auth/next-js'
 
 import { env } from '@/config/env'
 import { getDrizzle } from '@/lib/db'
+import { user, session, account, verification } from '@/lib/db/schema'
 
 const ONE_HOUR = 60 * 60 * 1
 const ONE_DAY = ONE_HOUR * 24
@@ -13,7 +14,10 @@ const ONE_MONTH = ONE_DAY * 30
 export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
   secret: env.BETTER_AUTH_SECRET,
-  database: drizzleAdapter(getDrizzle(), { provider: 'sqlite' }),
+  database: drizzleAdapter(getDrizzle(), {
+    provider: 'sqlite',
+    schema: { user, session, account, verification },
+  }),
   emailAndPassword: { enabled: true },
   plugins: [nextCookies()],
   socialProviders: {

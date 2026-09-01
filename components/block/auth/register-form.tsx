@@ -21,12 +21,13 @@ import { cn } from '@/lib/utils'
 
 import { Icons } from '../common/icons'
 
-export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
+export function RegisterForm({ className, ...props }: React.ComponentProps<'div'>) {
   const t = useTranslations('auth')
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSignInGoogle = async () => {
+  const handleSignUpGoogle = async () => {
     try {
       const result = await signInWithGoogle()
       if (result?.error) {
@@ -37,12 +38,17 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
     }
   }
 
-  const handleSignInEmail = async (e: React.FormEvent) => {
+  const handleSignUpEmail = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const result = await authClient.signIn.email({ email, password, callbackURL: '/dashboard' })
+      const result = await authClient.signUp.email({
+        name,
+        email,
+        password,
+        callbackURL: '/dashboard',
+      })
       if (result?.error) {
-        toast.error(result.error.message || 'Sign in failed')
+        toast.error(result.error.message || 'Sign up failed')
       }
     } catch {
       toast.error('An unexpected error occurred. Please try again.')
@@ -51,7 +57,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <form onSubmit={handleSignInEmail}>
+      <form onSubmit={handleSignUpEmail}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
             <a href="#" className="flex flex-col items-center gap-2 font-medium">
@@ -62,9 +68,20 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
             </a>
             <h1 className="text-xl font-bold">{t('welcome')}</h1>
             <FieldDescription>
-              {t('dontHaveAccount')} <Link href="/sign-up">{t('signUp')}</Link>
+              {t('haveAccount')} <Link href="/sign-in">{t('signIn')}</Link>
             </FieldDescription>
           </div>
+          <Field>
+            <FieldLabel htmlFor="name">{t('name')}</FieldLabel>
+            <Input
+              id="name"
+              type="text"
+              placeholder={t('namePlaceholder')}
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Field>
           <Field>
             <FieldLabel htmlFor="email">{t('email')}</FieldLabel>
             <Input
@@ -80,20 +97,20 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
             <FieldLabel htmlFor="password">{t('password')}</FieldLabel>
             <PasswordInput
               id="password"
-              placeholder="••••••••"
+              placeholder={t('passwordPlaceholder')}
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </Field>
           <Field>
-            <Button type="submit">{t('login')}</Button>
+            <Button type="submit">{t('createAccount')}</Button>
           </Field>
           <FieldSeparator>{t('or')}</FieldSeparator>
 
           <div className="space-y-4">
             <Field>
-              <Button variant="outline" type="button" onClick={handleSignInGoogle}>
+              <Button variant="outline" type="button" onClick={handleSignUpGoogle}>
                 <Icons.googleColorful className="size-6" />
                 {t('continueWithGoogle')}
               </Button>

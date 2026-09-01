@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { Outfit } from 'next/font/google'
@@ -17,7 +18,25 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
-export const metadata = META
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const baseUrl = META.metadataBase?.toString() ?? 'https://example.com'
+  const languages: Record<string, string> = {}
+  for (const loc of routing.locales) {
+    languages[loc] = `${baseUrl.replace(/\/$/, '')}/${loc}`
+  }
+  return {
+    ...META,
+    alternates: {
+      canonical: `${baseUrl.replace(/\/$/, '')}/${locale}`,
+      languages,
+    },
+  }
+}
 
 export default async function LocaleLayout({
   children,

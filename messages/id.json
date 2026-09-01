@@ -63,13 +63,20 @@
     "welcome": "Selamat datang di Vinext Starterkit",
     "dontHaveAccount": "Belum punya akun?",
     "signUp": "Daftar",
+    "haveAccount": "Sudah punya akun?",
+    "signIn": "Masuk",
+    "name": "Nama Lengkap",
+    "namePlaceholder": "John Doe",
+    "createAccount": "Buat Akun",
     "email": "Email",
     "emailPlaceholder": "m@contoh.com",
     "password": "Kata Sandi",
+    "passwordPlaceholder": "••••••••",
     "login": "Masuk",
     "or": "Atau",
     "continueWithGoogle": "Lanjutkan dengan Google",
-    "termsStart": "Dengan melanjutkan, Anda menyetujui",
+    "terms": "Dengan melanjutkan, Anda menyetujui",
+    "and": "dan",
     "termsOfService": "Ketentuan Layanan",
     "privacyPolicy": "Kebijakan Privasi"
   },
@@ -111,6 +118,89 @@
     "settingsAppearance": {
       "title": "Tampilan",
       "subtitle": "Sesuaikan tampilan dan nuansa situs Anda"
+    }
+  },
+  "legal": {
+    "lastUpdated": "Terakhir diperbarui: {date}",
+    "privacy": {
+      "title": "Kebijakan Privasi",
+      "intro": "Vinext Starterkit (\"kami\") mengoperasikan situs web dan platform CMS ini. Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan melindungi informasi Anda saat Anda mengunjungi situs web kami atau menggunakan layanan kami.",
+      "sections": [
+        {
+          "heading": "1. Informasi yang Kami Kumpulkan",
+          "body": "Kami dapat mengumpulkan informasi pribadi yang Anda berikan secara sukarela saat mendaftar akun, seperti nama dan alamat email Anda. Saat menggunakan platform, kami juga mengumpulkan data penggunaan seperti halaman yang Anda kunjungi, konten yang Anda buat, dan file media yang Anda unggah."
+        },
+        {
+          "heading": "2. Cara Kami Menggunakan Informasi Anda",
+          "body": "Kami menggunakan informasi yang kami kumpulkan untuk menyediakan, memelihara, dan meningkatkan layanan kami; untuk mengautentikasi Anda dan mengelola akun Anda; untuk memproses permintaan Anda; dan untuk mengirimkan pemberitahuan administratif atau keamanan yang penting."
+        },
+        {
+          "heading": "3. Cookie dan Pelacakan",
+          "body": "Kami menggunakan cookie dan teknologi serupa untuk menjaga Anda tetap masuk, mengingat preferensi Anda (seperti status sidebar), dan memahami bagaimana layanan kami digunakan. Anda dapat mengontrol cookie melalui pengaturan peramban Anda."
+        },
+        {
+          "heading": "4. Penyimpanan dan Keamanan Data",
+          "body": "Data Anda disimpan pada infrastruktur Cloudflare D1 dan R2. Kami menerapkan langkah-langkah teknis dan organisasi yang wajar untuk melindungi informasi pribadi Anda dari akses, perubahan, pengungkapan, atau perusakan yang tidak sah. Namun, tidak ada metode transmisi melalui internet yang 100% aman."
+        },
+        {
+          "heading": "5. Layanan Pihak Ketiga",
+          "body": "Kami mengandalkan penyedia layanan pihak ketiga, termasuk Cloudflare dan Google (untuk autentikasi), untuk mengoperasikan platform kami. Penyedia ini dapat memproses data sesuai dengan kebijakan privasi mereka masing-masing."
+        },
+        {
+          "heading": "6. Hak Anda",
+          "body": "Anda dapat mengakses, mengoreksi, memperbarui, atau menghapus informasi akun Anda kapan saja melalui pengaturan akun atau dengan menghubungi kami. Anda juga dapat menolak atau membatasi pemrosesan tertentu atas informasi pribadi Anda jika diizinkan oleh hukum."
+        },
+        {
+          "heading": "7. Perubahan Kebijakan Ini",
+          "body": "Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu. Kami akan memberi tahu Anda tentang perubahan material dengan memposting kebijakan baru di halaman ini. Anda disarankan untuk meninjau kebijakan ini secara berkala."
+        },
+        {
+          "heading": "8. Hubungi Kami",
+          "body": "Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini, silakan hubungi kami melalui informasi kontak yang tersedia di situs web kami."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Ketentuan Layanan",
+      "intro": "Ketentuan Layanan ini (\"Ketentuan\") mengatur akses dan penggunaan situs web serta platform Vinext Starterkit. Dengan membuat akun atau menggunakan layanan kami, Anda menyetujui untuk terikat oleh Ketentuan ini.",
+      "sections": [
+        {
+          "heading": "1. Penerimaan Ketentuan",
+          "body": "Dengan mengakses atau menggunakan platform, Anda menyetujui Ketentuan ini. Jika Anda tidak menyetujui semua Ketentuan ini, Anda tidak boleh mengakses atau menggunakan layanan."
+        },
+        {
+          "heading": "2. Akun dan Pendaftaran",
+          "body": "Untuk menggunakan fitur tertentu dari platform, Anda harus mendaftarkan akun. Anda bertanggung jawab untuk menjaga kerahasiaan kredensial Anda dan untuk semua aktivitas yang terjadi di bawah akun Anda. Anda setuju untuk memberikan informasi yang akurat dan lengkap."
+        },
+        {
+          "heading": "3. Penggunaan yang Dapat Diterima",
+          "body": "Anda setuju untuk tidak menggunakan platform untuk: melanggar hukum yang berlaku; melanggar hak orang lain; mengunggah konten atau kode berbahaya; mencoba mendapatkan akses tidak sah ke platform; atau mengganggu pengoperasian layanan."
+        },
+        {
+          "heading": "4. Kepemilikan Konten",
+          "body": "Anda mempertahankan semua hak atas konten yang Anda buat dan publikasikan melalui platform. Dengan memublikasikan konten, Anda memberi kami lisensi non-eksklusif bebas royalti untuk menghosting, menyimpan, dan menampilkan konten tersebut sehubungan dengan penyediaan layanan."
+        },
+        {
+          "heading": "5. Ketersediaan Layanan",
+          "body": "Kami berusaha menjaga platform tetap tersedia setiap saat, tetapi kami tidak menjamin layanan tanpa gangguan atau bebas kesalahan. Platform disediakan dengan dasar \"sebagaimana adanya\" dan \"sesuai ketersediaannya\"."
+        },
+        {
+          "heading": "6. Batasan Tanggung Jawab",
+          "body": "Sejauh yang diizinkan oleh hukum, Vinext Starterkit tidak bertanggung jawab atas kerusakan tidak langsung, insidental, khusus, konsekuensial, atau punitif, atau kehilangan keuntungan atau pendapatan, baik yang terjadi secara langsung maupun tidak langsung."
+        },
+        {
+          "heading": "7. Penghentian",
+          "body": "Kami dapat menangguhkan atau menghentikan akses Anda ke platform kapan saja, dengan atau tanpa pemberitahuan, atas perilaku yang kami yakini melanggar Ketentuan ini atau merugikan pengguna lain atau layanan."
+        },
+        {
+          "heading": "8. Hukum yang Berlaku",
+          "body": "Ketentuan ini diatur dan ditafsirkan sesuai dengan hukum yang berlaku, tanpa memperhatikan prinsip benturan hukum."
+        },
+        {
+          "heading": "9. Hubungi Kami",
+          "body": "Jika Anda memiliki pertanyaan tentang Ketentuan ini, silakan hubungi kami melalui informasi kontak yang tersedia di situs web kami."
+        }
+      ]
     }
   }
 }

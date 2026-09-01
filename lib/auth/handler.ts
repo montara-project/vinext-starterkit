@@ -48,19 +48,6 @@ function mapBetterAuthUser(user: {
  * Require authentication and redirect to home page if not authenticated
  */
 export async function requireSession(): Promise<AuthSession> {
-  const google = await getAccessToken()
-
-  // Remove this comment to get Access Token
-  // console.log(google)
-
-  if (!google?.accessToken) {
-    await auth.api.signOut({
-      headers: await headers(),
-    })
-
-    throw redirect('/sign-in')
-  }
-
   const session = await auth.api.getSession({
     headers: await headers(),
   })
@@ -69,10 +56,12 @@ export async function requireSession(): Promise<AuthSession> {
     throw redirect('/sign-in')
   }
 
+  const google = await getAccessToken()
+
   return {
     ...session,
     user: mapBetterAuthUser(session.user),
-    data: google,
+    data: google ?? { provider: 'custom' },
   }
 }
 
@@ -81,12 +70,6 @@ export async function requireSession(): Promise<AuthSession> {
  * @returns Session object or null if not authenticated
  */
 export async function getSession() {
-  const google = await getAccessToken()
-
-  if (!google) {
-    return null
-  }
-
   const session = await auth.api.getSession({
     headers: await headers(),
   })
@@ -95,10 +78,12 @@ export async function getSession() {
     return null
   }
 
+  const google = await getAccessToken()
+
   return {
     ...session,
     user: mapBetterAuthUser(session.user),
-    data: google,
+    data: google ?? { provider: 'custom' },
   }
 }
 

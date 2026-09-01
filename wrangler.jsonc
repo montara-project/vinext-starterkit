@@ -24,23 +24,23 @@
   "upload_source_maps": true,
   // "workers_dev": false,
   // "preview_urls": false,
-  // "routes": [
-  //   {
-  //     "pattern": "example.com",
-  //     "zone_name": "example.com",
-  //     "custom_domain": true,
-  //   },
-  // ],
+  "routes": [
+    {
+      "pattern": "vinext.suksesbelajar.my.id",
+      "zone_name": "suksesbelajar.my.id",
+      "custom_domain": true,
+    },
+  ],
   "vars": {
-    "NEXT_PUBLIC_API_URL": "https://vinext-starterkit.your-name.workers.dev/api",
+    "NEXT_PUBLIC_API_URL": "https://vinext.suksesbelajar.my.id/api",
     "NEXT_PUBLIC_OSM_API_URL": "https://nominatim.openstreetmap.org",
-    "BETTER_AUTH_URL": "https://vinext-starterkit.your-name.workers.dev",
+    "BETTER_AUTH_URL": "https://vinext.suksesbelajar.my.id",
   },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "vinext-db",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "3f3ce754-f174-46c1-a811-8fb489e3aedc",
     },
   ],
   "r2_buckets": [

@@ -34,8 +34,14 @@ import { Models } from '@/lib/api/models'
 import { services } from '@/lib/api/services'
 import { cn } from '@/lib/utils'
 
-const formatDate = (date: string) =>
-  new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(date))
+const formatDate = (date: string | null | undefined) => {
+  if (!date) return '—'
+  try {
+    return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(date))
+  } catch {
+    return '—'
+  }
+}
 
 type UserFormData = {
   fullname: string

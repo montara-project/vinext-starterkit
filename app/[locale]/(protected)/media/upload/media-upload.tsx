@@ -4,9 +4,10 @@ import { UploadCloud, X } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { services } from '@/lib/api/services'
+import { env } from '@/config/env'
 
 interface SelectedFile {
+  file: File
   name: string
   size: number
   type: string
@@ -28,6 +29,7 @@ export function MediaUpload() {
   const addFiles = (list: FileList | null) => {
     if (!list) return
     const next = Array.from(list).map((file) => ({
+      file,
       name: file.name,
       size: file.size,
       type: file.type,
@@ -41,8 +43,14 @@ export function MediaUpload() {
     if (files.length === 0) return
     setIsSubmitting(true)
     try {
-      for (const file of files) {
-        await services.media.store({ name: file.name, type: file.type, size: file.size })
+      for (const item of files) {
+        const formData = new FormData()
+        formData.append('file', item.file)
+        const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/v1/media`, {
+          method: 'POST',
+          body: formData,
+        })
+        if (!res.ok) throw new Error('Upload failed')
       }
       alert(`Uploaded ${files.length} file(s) successfully.`)
       setFiles([])
