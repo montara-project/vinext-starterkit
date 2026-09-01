@@ -27,7 +27,9 @@ export default async function Home() {
         <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight sm:text-6xl">
           {t('heroTitle')}
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">{t('heroSubtitle')}</p>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+          {t('heroSubtitle')}
+        </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <Button asChild size="lg">

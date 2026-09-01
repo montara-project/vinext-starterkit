@@ -31,11 +31,24 @@
   //     "custom_domain": true,
   //   },
   // ],
-  // "vars": {
-  //   "NEXT_PUBLIC_API_URL": "https://api.example.com",
-  //   "NEXT_PUBLIC_OSM_API_URL": "https://nominatim.openstreetmap.org",
-  //   "BETTER_AUTH_URL": "https://example.com",
-  // },
+  "vars": {
+    "NEXT_PUBLIC_API_URL": "https://vinext-starterkit.your-name.workers.dev/api",
+    "NEXT_PUBLIC_OSM_API_URL": "https://nominatim.openstreetmap.org",
+    "BETTER_AUTH_URL": "https://vinext-starterkit.your-name.workers.dev",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vinext-db",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+    },
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "vinext-media",
+    },
+  ],
 
   /**
    * Smart Placement
