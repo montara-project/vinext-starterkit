@@ -1,27 +1,31 @@
-'use client'
-
 import { useSelector } from '@tanstack/react-form'
+import { DateRange } from 'react-day-picker'
 
 import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field'
-import { Textarea } from '@/components/ui/textarea'
 import { useFieldContext } from '@/hooks/form-context'
 
-interface TextareaFieldProps {
+import DateRangePickerInput from '../common/date_range-picker-input'
+
+interface DateRangePickerFieldProps {
   label?: string
   placeholder?: string
+  defaultValue?: DateRange
+  onDateChange?: (date: DateRange | undefined) => void
   note?: string
   asterisk?: boolean
-  rows?: number
+  disabledPast?: boolean
 }
 
-export default function TextareaField({
+export default function DateRangePickerField({
   label,
   placeholder,
+  defaultValue,
+  onDateChange,
   note,
   asterisk = false,
-  rows,
-}: TextareaFieldProps) {
-  const field = useFieldContext<string>()
+  disabledPast = false,
+}: DateRangePickerFieldProps) {
+  const field = useFieldContext<DateRange>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
   const isInvalid = !!errors?.length
@@ -32,16 +36,16 @@ export default function TextareaField({
         {label}
         {asterisk && <span className="text-destructive">*</span>}
       </FieldLabel>
-      <Textarea
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
+      <DateRangePickerInput
+        date={field.state.value || defaultValue}
+        onDateChange={(date) => {
+          if (date) {
+            field.handleChange(date)
+            onDateChange?.(date)
+          }
+        }}
         placeholder={placeholder}
-        className="min-h-[120px]"
-        rows={rows}
+        disabledPast={disabledPast}
       />
       {note && <FieldDescription>{note}</FieldDescription>}
       {isInvalid && <FieldError errors={field.state.meta.errors} />}

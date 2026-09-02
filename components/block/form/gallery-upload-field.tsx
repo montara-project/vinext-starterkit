@@ -1,7 +1,14 @@
 'use client'
 
+import {
+  IconAlertTriangle,
+  IconPhoto,
+  IconTrash,
+  IconUpload,
+  IconX,
+  IconZoomIn,
+} from '@tabler/icons-react'
 import { useSelector } from '@tanstack/react-form'
-import { ImageIcon, Trash, TriangleAlert, Upload, XIcon, ZoomInIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -101,7 +108,7 @@ export default function GalleryUploadField({
                 isInvalid ? 'bg-destructive/10' : isDragging ? 'bg-primary/10' : 'bg-muted'
               )}
             >
-              <ImageIcon
+              <IconPhoto
                 className={cn(
                   'h-5 w-5',
                   isInvalid
@@ -138,7 +145,7 @@ export default function GalleryUploadField({
               variant="outline"
               className="border-primary text-primary rounded-lg"
             >
-              <Upload className="text-primary h-4 w-4" />
+              <IconUpload className="text-primary h-4 w-4" />
               Select Images
             </Button>
           </div>
@@ -156,7 +163,7 @@ export default function GalleryUploadField({
               </div>
             </div>
             <Button onClick={clearFiles} type="button" variant="destructive" appearance="ghost">
-              <Trash />
+              <IconTrash />
               <span>Clear All</span>
             </Button>
           </div>
@@ -177,7 +184,7 @@ export default function GalleryUploadField({
                   />
                 ) : (
                   <div className="bg-muted flex h-full w-full items-center justify-center rounded-lg border">
-                    <ImageIcon className="text-muted-foreground h-8 w-8" />
+                    <IconPhoto className="text-muted-foreground h-8 w-8" />
                   </div>
                 )}
 
@@ -192,7 +199,7 @@ export default function GalleryUploadField({
                       className="size-7"
                       type="button"
                     >
-                      <ZoomInIcon className="opacity-100/80" />
+                      <IconZoomIn className="opacity-100/80" />
                     </Button>
                   )}
 
@@ -204,7 +211,7 @@ export default function GalleryUploadField({
                     className="size-7"
                     type="button"
                   >
-                    <XIcon className="opacity-100/80" />
+                    <IconX className="opacity-100/80" />
                   </Button>
                 </div>
 
@@ -222,7 +229,7 @@ export default function GalleryUploadField({
         {errorsUpload.length > 0 && (
           <Alert variant="destructive" appearance="light" className="mt-5">
             <AlertIcon>
-              <TriangleAlert />
+              <IconAlertTriangle />
             </AlertIcon>
             <AlertContent>
               <AlertTitle>Error</AlertTitle>
@@ -265,7 +272,7 @@ export default function GalleryUploadField({
                 className="absolute inset-e-2 top-2 size-7 p-0"
                 type="button"
               >
-                <XIcon className="h-4 w-4" />
+                <IconX className="h-4 w-4" />
               </Button>
             </div>
           </div>

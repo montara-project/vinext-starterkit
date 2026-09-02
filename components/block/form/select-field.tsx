@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useFieldContext } from '@/hooks/form-context'
+import { cn } from '@/lib/utils'
 import { Option } from '@/types/select'
 
 interface SelectFieldProps<TData> {
@@ -18,6 +19,12 @@ interface SelectFieldProps<TData> {
   placeholder?: string
   defaultValue?: string
   options: Option<TData>[]
+  onSelect?: (value: string) => void
+  itemRender?: (option: Option<TData>) => React.ReactNode
+  className?: string
+  loading?: boolean
+  asterisk?: boolean
+  disabled?: boolean
 }
 
 export default function SelectField<TData>({
@@ -25,6 +32,12 @@ export default function SelectField<TData>({
   placeholder,
   defaultValue,
   options,
+  onSelect,
+  itemRender,
+  className,
+  loading = false,
+  asterisk = false,
+  disabled = false,
 }: SelectFieldProps<TData>) {
   const field = useFieldContext<string>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
@@ -33,21 +46,37 @@ export default function SelectField<TData>({
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
       <Select
         name={field.name}
         value={defaultValue || field.state.value}
-        onValueChange={field.handleChange}
+        onValueChange={(value) => {
+          field.handleChange(value)
+          onSelect?.(value)
+        }}
         indicatorPosition="right"
       >
-        <SelectTrigger id={field.name} aria-invalid={isInvalid} className="h-10 min-w-30">
-          <SelectValue placeholder={placeholder} />
+        <SelectTrigger
+          id={field.name}
+          aria-invalid={isInvalid}
+          className={cn('h-10 min-w-30', className)}
+          disabled={disabled}
+        >
+          <SelectValue placeholder={loading ? 'Loading...' : placeholder} />
         </SelectTrigger>
         <SelectContent position="popper">
-          {options.length > 0 ? (
+          {loading ? (
+            <SelectItem disabled value="-">
+              Loading...
+            </SelectItem>
+          ) : options.length > 0 ? (
             options.map((option) => (
               <SelectItem key={option.value} value={option.value}>
-                {option.label}
+                {itemRender && itemRender(option)}
+                {!itemRender && option.label}
               </SelectItem>
             ))
           ) : (

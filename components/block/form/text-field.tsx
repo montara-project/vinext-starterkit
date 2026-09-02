@@ -1,26 +1,29 @@
 'use client'
 
+import { IconCheck } from '@tabler/icons-react'
 import { useSelector } from '@tanstack/react-form'
 import { VariantProps } from 'class-variance-authority'
-import { LucideProps } from 'lucide-react'
-import { ChangeEvent, ForwardRefExoticComponent, RefAttributes } from 'react'
+import { ChangeEvent } from 'react'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input, inputVariants, InputWrapper } from '@/components/ui/input'
 import { useFieldContext } from '@/hooks/form-context'
 
-type TextFieldProps = React.ComponentProps<'input'> &
-  VariantProps<typeof inputVariants> & {
-    label?: string
-    onChange?: (value: string) => void
-    icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>
-  }
+type InputProps = React.ComponentProps<'input'> & VariantProps<typeof inputVariants>
+
+type TextFieldProps = InputProps & {
+  label?: string
+  onChange?: (value: string) => void
+  icon?: typeof IconCheck
+  asterisk?: boolean
+}
 
 export default function TextField({
   label,
   placeholder,
   onChange,
   disabled,
+  asterisk = false,
   ...props
 }: TextFieldProps) {
   const field = useFieldContext<string | number>()
@@ -30,8 +33,11 @@ export default function TextField({
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-      <InputWrapper>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
+      <InputWrapper className="h-10">
         {props.icon && <props.icon />}
         <Input
           id={field.name}

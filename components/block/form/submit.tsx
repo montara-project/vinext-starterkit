@@ -1,6 +1,6 @@
 'use client'
 
-import { LoaderCircleIcon } from 'lucide-react'
+import { IconDeviceFloppy, IconLoader2 } from '@tabler/icons-react'
 import { ButtonHTMLAttributes } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -9,10 +9,16 @@ import { cn } from '@/lib/utils'
 
 interface SubmitButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string
+  icon?: typeof IconDeviceFloppy
   className?: string
 }
 
-export default function SubmitButton({ label, className, ...props }: SubmitButtonProps) {
+export default function SubmitButton({
+  label,
+  icon: Icon,
+  className,
+  ...props
+}: SubmitButtonProps) {
   const form = useFormContext()
 
   return (
@@ -20,11 +26,15 @@ export default function SubmitButton({ label, className, ...props }: SubmitButto
       {(isSubmitting) => (
         <Button
           type="submit"
-          className={cn('h-10 w-full', className)}
+          className={cn(
+            'text-off-white bg-obsidian-black hover:bg-obsidian-black/80 h-10 rounded-lg px-6 transition-colors',
+            className
+          )}
           disabled={isSubmitting}
           {...props}
         >
-          {isSubmitting ? <LoaderCircleIcon className="size-4 animate-spin" /> : null}
+          {isSubmitting ? <IconLoader2 className="size-4 animate-spin" /> : null}
+          {Icon ? <Icon className="size-4" /> : null}
           {label}
         </Button>
       )}

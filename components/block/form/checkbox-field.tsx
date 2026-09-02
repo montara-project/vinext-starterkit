@@ -2,21 +2,18 @@
 
 import { useSelector } from '@tanstack/react-form'
 
-import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { Switch as SwitchComponent } from '@/components/ui/switch'
+import { Field, FieldError } from '@/components/ui/field'
 import { useFieldContext } from '@/hooks/form-context'
 
-interface SwitchFieldProps {
+import CheckboxInput from '../common/checkbox-input'
+
+interface CheckboxFieldProps {
   label?: string
   onCheckedChange: (checked: boolean) => void
-  asterisk?: boolean
+  disabled?: boolean
 }
 
-export default function SwitchField({
-  label,
-  onCheckedChange,
-  asterisk = false,
-}: SwitchFieldProps) {
+export default function CheckboxField({ label, onCheckedChange, disabled }: CheckboxFieldProps) {
   const field = useFieldContext<boolean>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
@@ -24,19 +21,16 @@ export default function SwitchField({
 
   return (
     <Field data-invalid={isInvalid}>
-      {label && (
-        <FieldLabel htmlFor={field.name} className="gap-1">
-          {label}
-          {asterisk && <span className="text-destructive">*</span>}
-        </FieldLabel>
-      )}
-      <SwitchComponent
-        id={label}
+      <CheckboxInput
+        id={field.name}
+        label={label || ''}
         onBlur={field.handleBlur}
         checked={field.state.value}
+        disabled={disabled}
         onCheckedChange={(checked) => {
-          field.handleChange(checked)
-          onCheckedChange(checked)
+          const isChecked = checked === true
+          field.handleChange(isChecked)
+          onCheckedChange(isChecked)
         }}
       />
       {isInvalid && <FieldError errors={field.state.meta.errors} />}

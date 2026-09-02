@@ -89,7 +89,7 @@ function DataGridTableHeadRow<TData>({
     <tr
       key={headerGroup.id}
       className={cn(
-        'bg-muted',
+        'bg-muted/40',
         props.tableLayout?.headerBorder && '[&>th]:border-b',
         props.tableLayout?.cellBorder && '[&_>:last-child]:border-e-0',
         props.tableLayout?.stripped && 'bg-transparent',
@@ -137,7 +137,7 @@ function DataGridTableHeadRowCell<TData>({
       data-pinned={isPinned || undefined}
       data-last-col={isLastLeftPinned ? 'left' : isFirstRightPinned ? 'right' : undefined}
       className={cn(
-        'relative h-12 text-left align-middle font-medium text-neutral-900 rtl:text-right [&:has([role=checkbox])]:pe-0',
+        'text-secondary-foreground/80 relative h-10 text-left align-middle font-normal rtl:text-right [&:has([role=checkbox])]:pe-0',
         headerCellSpacing,
         props.tableLayout?.cellBorder && 'border-e',
         props.tableLayout?.columnsResizable && column.getCanResize() && 'truncate',
@@ -411,7 +411,7 @@ function DataGridTableRowSelect<TData>({
       ></div>
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value: any) => row.toggleSelected(!!value)}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
         size={size ?? 'sm'}
         className="align-[inherit]"
@@ -429,7 +429,7 @@ function DataGridTableRowSelectAll({ size }: { size?: 'sm' | 'md' | 'lg' }) {
         table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
       }
       disabled={isLoading || recordCount === 0}
-      onCheckedChange={(value: any) => table.toggleAllPageRowsSelected(!!value)}
+      onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
       aria-label="Select all"
       size={size}
       className="align-[inherit]"

@@ -1,8 +1,8 @@
 'use client'
 
+import { IconEye, IconEyeOff } from '@tabler/icons-react'
 import { useSelector } from '@tanstack/react-form'
 import { VariantProps } from 'class-variance-authority'
-import { Eye, EyeOff } from 'lucide-react'
 import React, { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -13,9 +13,15 @@ import { useFieldContext } from '@/hooks/form-context'
 type PasswordInputProps = React.ComponentProps<'input'> &
   VariantProps<typeof inputVariants> & {
     label?: string
+    asterisk?: boolean
   }
 
-export default function PasswordField({ label, placeholder, ...props }: PasswordInputProps) {
+export default function PasswordField({
+  label,
+  placeholder,
+  asterisk = false,
+  ...props
+}: PasswordInputProps) {
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   const field = useFieldContext<string>()
@@ -25,7 +31,10 @@ export default function PasswordField({ label, placeholder, ...props }: Password
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
       <div className="relative">
         <Input
           type={passwordVisible ? 'text' : 'password'}
@@ -50,9 +59,9 @@ export default function PasswordField({ label, placeholder, ...props }: Password
           aria-label={passwordVisible ? 'Hide password' : 'Show password'}
         >
           {passwordVisible ? (
-            <EyeOff className="text-muted-foreground" />
+            <IconEyeOff className="text-muted-foreground" />
           ) : (
-            <Eye className="text-muted-foreground" />
+            <IconEye className="text-muted-foreground" />
           )}
         </Button>
       </div>

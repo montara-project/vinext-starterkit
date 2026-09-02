@@ -3,25 +3,30 @@
 import { useSelector } from '@tanstack/react-form'
 
 import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field'
-import { Textarea } from '@/components/ui/textarea'
 import { useFieldContext } from '@/hooks/form-context'
 
-interface TextareaFieldProps {
+import DatePickerInput from '../common/date-picker-input'
+
+interface DatePickerFieldProps {
   label?: string
   placeholder?: string
+  defaultValue?: Date
+  onDateChange?: (date: Date | undefined) => void
   note?: string
   asterisk?: boolean
-  rows?: number
+  minDate?: Date
 }
 
-export default function TextareaField({
+export default function DatePickerField({
   label,
   placeholder,
+  defaultValue,
+  onDateChange,
   note,
-  asterisk = false,
-  rows,
-}: TextareaFieldProps) {
-  const field = useFieldContext<string>()
+  asterisk,
+  minDate,
+}: DatePickerFieldProps) {
+  const field = useFieldContext<Date>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
   const isInvalid = !!errors?.length
@@ -32,16 +37,16 @@ export default function TextareaField({
         {label}
         {asterisk && <span className="text-destructive">*</span>}
       </FieldLabel>
-      <Textarea
-        id={field.name}
-        name={field.name}
-        value={field.state.value}
-        onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
-        aria-invalid={isInvalid}
+      <DatePickerInput
+        date={field.state.value || defaultValue}
+        onDateChange={(date) => {
+          if (date) {
+            field.handleChange(date)
+            onDateChange?.(date)
+          }
+        }}
         placeholder={placeholder}
-        className="min-h-[120px]"
-        rows={rows}
+        minDate={minDate}
       />
       {note && <FieldDescription>{note}</FieldDescription>}
       {isInvalid && <FieldError errors={field.state.meta.errors} />}

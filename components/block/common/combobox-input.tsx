@@ -1,8 +1,9 @@
 'use client'
 
-import { Plus } from 'lucide-react'
+import { IconX } from '@tabler/icons-react'
 import React, { useState } from 'react'
 
+import { Badge, BadgeButton } from '@/components/ui/badge'
 import { Button, ButtonArrow } from '@/components/ui/button'
 import {
   Command,
@@ -12,31 +13,44 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from '@/components/ui/command'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { cn } from '@/lib/utils'
 import { Option } from '@/types/select'
 
 interface ComboboxInputProps<TData> {
   options: Option<TData>[]
   label: string
-  defaultValue: string
-  onSelect: (value: string) => void
+  defaultValues: string[]
+  onSelect: (value: string[]) => void
   onBlur?: () => void
-  onAdd?: () => void
 }
 
 export default function ComboboxInput<TData>({
   options,
-  defaultValue,
+  defaultValues,
   label,
   onSelect,
   onBlur,
-  onAdd,
 }: ComboboxInputProps<TData>) {
   const [open, setOpen] = useState(false)
+  const [selectedValues, setSelectedValues] = React.useState<string[]>(defaultValues)
+
+  const toggleSelection = (value: string) => {
+    setSelectedValues((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    )
+    onSelect(
+      selectedValues.includes(value)
+        ? selectedValues.filter((v) => v !== value)
+        : [...selectedValues, value]
+    )
+  }
+
+  const removeSelection = (value: string) => {
+    setSelectedValues((prev) => prev.filter((v) => v !== value))
+    onSelect(selectedValues.filter((v) => v !== value))
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -44,59 +58,59 @@ export default function ComboboxInput<TData>({
         <Button
           variant="outline"
           role="combobox"
-          mode="input"
-          placeholder={!defaultValue}
           aria-expanded={open}
-          className="w-full justify-between"
+          autoHeight={true}
+          mode="input"
+          placeholder={selectedValues.length === 0}
+          className="relative w-full p-1"
         >
-          <span className={cn('truncate')}>
-            {defaultValue
-              ? options.find((item) => item.value === defaultValue)?.label
-              : `Select a ${label}...`}
-          </span>
-          <ButtonArrow />
+          <div className="flex flex-wrap items-center gap-1 pe-2.5">
+            {selectedValues.length > 0 ? (
+              selectedValues.map((val) => {
+                const item = options.find((c) => c.value === val)
+                return item ? (
+                  <Badge key={val} variant="outline" className="text-primary bg-ivory font-medium">
+                    {item.label}
+                    <BadgeButton
+                      className="text-primary"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        removeSelection(val)
+                      }}
+                    >
+                      <IconX />
+                    </BadgeButton>
+                  </Badge>
+                ) : null
+              })
+            ) : (
+              <span className="px-2.5">{label}</span>
+            )}
+          </div>
+          <ButtonArrow className="absolute inset-e-3 top-2" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
+      <PopoverContent className="w-(--radix-popper-anchor-width) p-0">
         <Command>
-          <CommandInput placeholder={`Search ${label}...`} />
+          <CommandInput placeholder={`Search ${label.toLowerCase()}...`} />
           <CommandList>
             <ScrollArea viewportClassName="max-h-[300px] [&>div]:block!">
-              <CommandEmpty>No {label} found.</CommandEmpty>
+              <CommandEmpty>No {label.toLowerCase()} found.</CommandEmpty>
               <CommandGroup>
                 {options.map((item) => (
                   <CommandItem
                     key={item.value}
                     value={item.value}
+                    onSelect={() => toggleSelection(item.value)}
                     onBlur={onBlur}
-                    onSelect={(currentValue) => {
-                      onSelect(currentValue === defaultValue ? '' : (currentValue ?? ''))
-                      setOpen(false)
-                    }}
                   >
-                    {item.label}
-                    {defaultValue === item.value && <CommandCheck />}
+                    <span className="truncate">{item.label}</span>
+                    {selectedValues.includes(item.value) && <CommandCheck />}
                   </CommandItem>
                 ))}
               </CommandGroup>
             </ScrollArea>
           </CommandList>
-
-          {onAdd && (
-            <React.Fragment>
-              <CommandSeparator />
-              <CommandGroup>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start border-blue-300 bg-blue-100 px-2.5 font-normal text-blue-600 transition-colors delay-200 hover:border-blue-400 hover:bg-blue-200 hover:text-blue-600"
-                  onClick={onAdd}
-                >
-                  <Plus className="size-4 text-blue-600" aria-hidden="true" />
-                  Add {label}
-                </Button>
-              </CommandGroup>
-            </React.Fragment>
-          )}
         </Command>
       </PopoverContent>
     </Popover>

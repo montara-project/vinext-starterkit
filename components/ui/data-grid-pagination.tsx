@@ -189,7 +189,7 @@ function DataGridPagination({
               <SelectTrigger className="w-fit" size="sm">
                 <SelectValue placeholder={`${newPageSize}`} />
               </SelectTrigger>
-              <SelectContent side="top" className="min-w-[50px]">
+              <SelectContent side="top" className="min-w-12.5">
                 {mergedProps?.sizes?.map((size: number) => (
                   <SelectItem key={size} value={`${size}`}>
                     {size}

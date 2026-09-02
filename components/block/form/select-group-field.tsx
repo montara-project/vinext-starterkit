@@ -14,12 +14,7 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { useFieldContext } from '@/hooks/form-context'
-
-interface Option<T> {
-  value: string
-  label: string
-  original?: T
-}
+import { Option } from '@/types/select'
 
 interface SelectGroupFieldProps<T extends Record<string, unknown>> {
   label?: string
@@ -28,6 +23,7 @@ interface SelectGroupFieldProps<T extends Record<string, unknown>> {
   options: Option<T>[]
   childLabel: keyof T
   childValue: keyof T
+  asterisk?: boolean
 }
 
 export default function SelectGroupField<T extends Record<string, any>>({
@@ -37,6 +33,7 @@ export default function SelectGroupField<T extends Record<string, any>>({
   options,
   childLabel,
   childValue,
+  asterisk = false,
 }: SelectGroupFieldProps<T>) {
   const field = useFieldContext<string>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
@@ -82,7 +79,10 @@ export default function SelectGroupField<T extends Record<string, any>>({
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
       <Select
         name={field.name}
         value={defaultValue || field.state.value}
