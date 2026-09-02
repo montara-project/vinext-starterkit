@@ -5,6 +5,9 @@ import vinext from 'vinext'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  optimizeDeps: {
+    exclude: ['next-intl'],
+  },
   plugins: [
     vinext({
       cache: { cdn: cdnAdapter() },
