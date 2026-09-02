@@ -193,6 +193,5 @@ export {
   CardHeading,
   CardTable,
   CardTitle,
-  CardToolbar
+  CardToolbar,
 }
-
