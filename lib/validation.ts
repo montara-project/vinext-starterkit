@@ -204,7 +204,7 @@ export const CustomerInformationContactSchema = z.object({
   lastName: requiredTrimmedString('last name'),
   age: requiredTrimmedString('age'),
   gender: requiredTrimmedString('gender'),
-  email: requiredEmail('email'),
+  email: requiredEmail(),
   countryCode: requiredTrimmedString('country code'),
   phone: requiredTrimmedString('phone'),
 })
