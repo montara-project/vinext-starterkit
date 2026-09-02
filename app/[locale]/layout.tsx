@@ -55,7 +55,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={cn('font-sans', outfit.variable, 'antialiased')}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <DecorationProvider>{children}</DecorationProvider>
         </NextIntlClientProvider>
       </body>
