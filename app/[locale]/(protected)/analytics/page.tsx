@@ -1,9 +1,8 @@
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
+import { AnalyticsDashboard } from '@/components/block/analytics/analytics-dashboard'
 import { META } from '@/lib/constants/meta'
-
-import { AnalyticsDashboard } from './analytics-dashboard'
 
 export const metadata: Metadata = {
   ...META,
@@ -12,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function AnalyticsPage() {
   const t = await getTranslations('pages')
+
   return (
     <div className="flex flex-col gap-6">
       <div>
