@@ -1,8 +1,7 @@
 import { Metadata } from 'next'
 
-import { META } from '@/lib/constants/meta'
-
 import PostTable from '@/components/block/posts/table'
+import { META } from '@/lib/constants/meta'
 
 export const metadata: Metadata = {
   ...META,

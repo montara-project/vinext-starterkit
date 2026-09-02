@@ -103,6 +103,7 @@ export default async function <Resource>Page() {
 ```
 
 Aturan:
+
 - Hanya set metadata. Tidak ada logic bisnis.
 - Render satu client component (`<Resource>Table`).
 - Jangan fetch data di server — semua data fetching di layer client.
@@ -176,6 +177,7 @@ export default function <Resource>Table() {
 ```
 
 Aturan:
+
 - `usePaginationQuery()` dari `@/hooks/use-pagination-query` — berbasis nuqs (`?page=0&pageSize=10`).
 - `useQuery(queries.<resource>.list(params))` — TanStack Query, query key dari `lib/api/queries/`.
 - `getTotal(data)` dari `@/lib/constants/paginate` — ambil `metadata.total` dengan fallback.
@@ -298,6 +300,7 @@ function ActionCell({ record }: ActionCellProps) {
 ```
 
 Aturan:
+
 - Column function: `export function <Resource>Column({ loading }: BaseColumnProps)` — return `useMemo<ColumnDef<Models.<Resource>>[]>(() => [...], [loading])`.
 - BaseColumnProps dari `@/types/column`: `{ loading: boolean }`.
 - Skeleton: setiap cell render `<Skeleton className="h-5 w-full" />` saat loading, `<span>` saat tidak.
@@ -313,6 +316,7 @@ Aturan:
 Setiap resource memiliki 3 file di `lib/api/`:
 
 **Service** (`lib/api/services/<resource>.ts`):
+
 ```ts
 import { HTTP_METHOD, ResourceMethods } from '@/types/api'
 import { Models } from '../models'
@@ -325,6 +329,7 @@ export const <resource>Services: ResourceMethods<Models.<Resource>> = clientReso
 ```
 
 **Query** (`lib/api/queries/<resource>.ts`):
+
 ```ts
 import { queryOptions } from '@tanstack/react-query'
 import { DEFAULT_PAGINATE } from '@/lib/constants/paginate'
@@ -354,6 +359,7 @@ export const <resource>Queries = { list: list<Resource>, get: get<Resource> } as
 ```
 
 **Model** (`lib/api/models/<resource>.ts`):
+
 ```ts
 export interface <Resource> {
   id: string
@@ -362,23 +368,24 @@ export interface <Resource> {
 ```
 
 Semua service, query, dan model di-register di index files masing-masing:
+
 - `lib/api/services/index.ts` → `services.<resource>`
 - `lib/api/queries/index.ts` → `queries.<resource>`
 - `lib/api/models/index.ts` → `Models.<Resource>`
 
 ### Shared Components
 
-| Component | Path | Props |
-|-----------|------|-------|
-| `SectionCard` | `@/components/block/common/section-card` | `{ title, toolbar?, children }` |
-| `ReactTable` | `@/components/block/common/react-table` | `{ columns, data, pageSize, pageIndex, total, ... }` |
-| `RowColumnAction` | `@/components/block/common/row-column-action` | `{ onShow?, onEdit?, onDelete?, dropdown?, actions? }` |
-| `SimpleAlertDialog` | `@/components/block/common/simple-alert-dialog` | `{ title, description, open, onOpenChange, onConfirm, confirmText, variant? }` |
-| `usePaginationQuery` | `@/hooks/use-pagination-query` | Returns `{ offset, limit, pageIndex }` |
-| `throwAxiosError` | `@/lib/api/axios-error` | `throwAxiosError(error)` — parse Axios error to Error |
-| `BaseColumnProps` | `@/types/column` | `{ loading: boolean }` |
-| `getTotal` | `@/lib/constants/paginate` | `getTotal(data)` — extract `metadata.total` |
-| `DataStateWrapper` | `@/components/block/common/data-state-wrapper` | Loading/error/empty state wrapper |
+| Component            | Path                                            | Props                                                                          |
+| -------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------ |
+| `SectionCard`        | `@/components/block/common/section-card`        | `{ title, toolbar?, children }`                                                |
+| `ReactTable`         | `@/components/block/common/react-table`         | `{ columns, data, pageSize, pageIndex, total, ... }`                           |
+| `RowColumnAction`    | `@/components/block/common/row-column-action`   | `{ onShow?, onEdit?, onDelete?, dropdown?, actions? }`                         |
+| `SimpleAlertDialog`  | `@/components/block/common/simple-alert-dialog` | `{ title, description, open, onOpenChange, onConfirm, confirmText, variant? }` |
+| `usePaginationQuery` | `@/hooks/use-pagination-query`                  | Returns `{ offset, limit, pageIndex }`                                         |
+| `throwAxiosError`    | `@/lib/api/axios-error`                         | `throwAxiosError(error)` — parse Axios error to Error                          |
+| `BaseColumnProps`    | `@/types/column`                                | `{ loading: boolean }`                                                         |
+| `getTotal`           | `@/lib/constants/paginate`                      | `getTotal(data)` — extract `metadata.total`                                    |
+| `DataStateWrapper`   | `@/components/block/common/data-state-wrapper`  | Loading/error/empty state wrapper                                              |
 
 ### Conventions
 

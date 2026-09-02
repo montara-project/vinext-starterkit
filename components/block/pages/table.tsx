@@ -32,10 +32,7 @@ export default function PageTable() {
   }
 
   const columns = PageColumn({ loading })
-  const items = useMemo(
-    () => (data?.data && data?.data?.length > 0 ? data.data : []),
-    [data]
-  )
+  const items = useMemo(() => (data?.data && data?.data?.length > 0 ? data.data : []), [data])
 
   return (
     <SectionCard
