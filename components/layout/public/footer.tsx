@@ -1,8 +1,10 @@
-import { getTranslations } from 'next-intl/server'
+'use client'
 
-export default async function PublicFooter() {
-  const t = await getTranslations('home')
-  const ta = await getTranslations('auth')
+import { useTranslations } from 'next-intl'
+
+export default function PublicFooter() {
+  const t = useTranslations('home')
+  const ta = useTranslations('auth')
   const year = new Date().getFullYear()
 
   return (
