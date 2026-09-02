@@ -5,17 +5,11 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import { PasswordInput } from '@/components/block/form/password-input'
 import { Button } from '@/components/ui/button'
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from '@/components/ui/field'
-import { Input } from '@/components/ui/input'
-import { Link } from '@/i18n/navigation'
+import { Field, FieldDescription, FieldGroup, FieldSeparator } from '@/components/ui/field'
+import { useAppForm } from '@/hooks/form'
+import { Link, useRouter } from '@/i18n/navigation'
+import { SignInSchema } from '@/lib/api/dtos/auth/schema'
 import { authClient, signInWithGoogle } from '@/lib/auth/auth-client'
 import { cn } from '@/lib/utils'
 
@@ -23,8 +17,35 @@ import { Icons } from '../common/icons'
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) {
   const t = useTranslations('auth')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+
+  const router = useRouter()
+  const [loading, setLoading] = useState(false)
+
+  const form = useAppForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    validators: {
+      onSubmit: SignInSchema,
+      onChange: SignInSchema,
+    },
+    onSubmit: async ({ value }) => {
+      setLoading(true)
+
+      try {
+        await authClient.signIn.email({ ...value })
+        router.push('/dashboard')
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.'
+        toast.error(message)
+      } finally {
+        setLoading(false)
+        form.reset()
+      }
+    },
+  })
 
   const handleSignInGoogle = async () => {
     try {
@@ -37,21 +58,14 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
     }
   }
 
-  const handleSignInEmail = async (e: React.FormEvent) => {
-    e.preventDefault()
-    try {
-      const result = await authClient.signIn.email({ email, password, callbackURL: '/dashboard' })
-      if (result?.error) {
-        toast.error(result.error.message || 'Sign in failed')
-      }
-    } catch {
-      toast.error('An unexpected error occurred. Please try again.')
-    }
-  }
-
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <form onSubmit={handleSignInEmail}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          form.handleSubmit()
+        }}
+      >
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
             <a href="#" className="flex flex-col items-center gap-2 font-medium">
@@ -65,29 +79,29 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
               {t('dontHaveAccount')} <Link href="/sign-up">{t('signUp')}</Link>
             </FieldDescription>
           </div>
+
+          <form.AppField
+            name="email"
+            children={(field) => (
+              <field.TextField
+                type="email"
+                label={t('email')}
+                placeholder={t('emailPlaceholder')}
+              />
+            )}
+          />
+
+          <form.AppField
+            name="password"
+            children={(field) => (
+              <field.PasswordField label={t('password')} placeholder={t('passwordPlaceholder')} />
+            )}
+          />
+
           <Field>
-            <FieldLabel htmlFor="email">{t('email')}</FieldLabel>
-            <Input
-              id="email"
-              type="email"
-              placeholder={t('emailPlaceholder')}
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="password">{t('password')}</FieldLabel>
-            <PasswordInput
-              id="password"
-              placeholder="••••••••"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Field>
-          <Field>
-            <Button type="submit">{t('login')}</Button>
+            <Button type="submit" disabled={form.state.isSubmitting || loading}>
+              {t('login')}
+            </Button>
           </Field>
           <FieldSeparator>{t('or')}</FieldSeparator>
 
@@ -101,6 +115,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
           </div>
         </FieldGroup>
       </form>
+
       <FieldDescription className="px-6 text-center">
         {t('terms')} <Link href="/terms-of-service">{t('termsOfService')}</Link> {t('and')}{' '}
         <Link href="/privacy-policy">{t('privacyPolicy')}</Link>.

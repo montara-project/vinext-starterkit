@@ -96,11 +96,9 @@ export const requiredString = (attribute: string) =>
 
 /**
  * Required email validation
- * @param attribute
  * @returns
  */
-export const requiredEmail = (attribute: string) =>
-  z.email(getValidationMessage('email', { attribute }))
+export const requiredEmail = () => z.email(getValidationMessage('email', { attribute: 'email' }))
 
 /**
  * Required number validation

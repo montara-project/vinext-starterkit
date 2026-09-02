@@ -1,20 +1,20 @@
 'use client'
 
 import { useSelector } from '@tanstack/react-form'
+import { VariantProps } from 'class-variance-authority'
 import { LucideProps } from 'lucide-react'
 import { ChangeEvent, ForwardRefExoticComponent, RefAttributes } from 'react'
 
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
-import { Input, InputWrapper } from '@/components/ui/input'
+import { Input, inputVariants, InputWrapper } from '@/components/ui/input'
 import { useFieldContext } from '@/hooks/form-context'
 
-interface TextFieldProps {
-  label?: string
-  placeholder?: string
-  onChange?: (value: string) => void
-  icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>
-  disabled?: boolean
-}
+type TextFieldProps = React.ComponentProps<'input'> &
+  VariantProps<typeof inputVariants> & {
+    label?: string
+    onChange?: (value: string) => void
+    icon?: ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>>
+  }
 
 export default function TextField({
   label,
@@ -46,6 +46,7 @@ export default function TextField({
           placeholder={placeholder}
           variant="lg"
           disabled={disabled}
+          {...props}
         />
       </InputWrapper>
       {isInvalid && <FieldError errors={field.state.meta.errors} />}
