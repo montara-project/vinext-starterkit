@@ -1,4 +1,4 @@
-import { customType, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { customType, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 // D1's bind() rejects JS Date objects. better-auth's drizzle adapter passes
 // Date objects for createdAt/updatedAt on write, so convert Date -> epoch ms
