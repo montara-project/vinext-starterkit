@@ -1,3 +1,4 @@
+import { forbidden, hasPermission } from '@/lib/api/permissions'
 import { auth } from '@/lib/auth/auth-server'
 import { getDB, getR2 } from '@/lib/db'
 
@@ -125,37 +126,6 @@ function requireSession(request: Request) {
   return auth.api.getSession({ headers: request.headers })
 }
 
-type Action = 'read' | 'create' | 'update' | 'delete'
-
-function forbidden() {
-  return json({ error: 'Forbidden' }, 403)
-}
-
-/**
- * Permission names follow `{resource}:{action}` (e.g. `posts:read`,
- * `users:create`, `roles:delete`). Access is granted by inserting that name
- * into `permissions`, linking it to a role in `role_permissions`, and
- * assigning the role to a user in `user_roles`.
- */
-function permissionName(resource: string, action: Action): string {
-  return `${resource}:${action}`
-}
-
-async function hasPermission(userId: string, resource: string, action: Action): Promise<boolean> {
-  const row = await getDB()
-    .prepare(
-      `SELECT 1 AS granted
-       FROM "user_roles" ur
-       INNER JOIN "role_permissions" rp ON rp."roleId" = ur."roleId"
-       INNER JOIN "permissions" p ON p."id" = rp."permissionId"
-       WHERE ur."userId" = ? AND p."name" = ?
-       LIMIT 1`
-    )
-    .bind(userId, permissionName(resource, action))
-    .first()
-  return row !== null && row !== undefined
-}
-
 function timestamp(config: ResourceConfig): string | number {
   return config.timestamps === 'milliseconds' ? Date.now() : new Date().toISOString()
 }
@@ -229,7 +199,7 @@ export async function GET(request: Request) {
     .bind(...binds, pageSize, offset)
     .all()
 
-  return json({ data: items.results, meta: { total, page, pageSize } })
+  return json({ data: items.results, metadata: { total, page, pageSize } })
 }
 
 export async function POST(request: Request) {

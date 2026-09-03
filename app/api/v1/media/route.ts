@@ -1,3 +1,4 @@
+import { forbidden, hasPermission } from '@/lib/api/permissions'
 import { auth } from '@/lib/auth/auth-server'
 import { getDB, getR2 } from '@/lib/db'
 
@@ -28,6 +29,8 @@ export async function GET(request: Request) {
   const session = await requireSession(request)
   if (!session) return unauthorized()
 
+  if (!(await hasPermission(session.user.id, 'media', 'read'))) return forbidden()
+
   const url = new URL(request.url)
   const db = getDB()
 
@@ -54,12 +57,14 @@ export async function GET(request: Request) {
     .bind(...binds, pageSize, offset)
     .all()
 
-  return json({ data: items.results, meta: { total, page, pageSize } })
+  return json({ data: items.results, metadata: { total, page, pageSize } })
 }
 
 export async function POST(request: Request) {
   const session = await requireSession(request)
   if (!session) return unauthorized()
+
+  if (!(await hasPermission(session.user.id, 'media', 'create'))) return forbidden()
 
   const contentType = request.headers.get('content-type') || ''
   if (!contentType.includes('multipart/form-data')) {

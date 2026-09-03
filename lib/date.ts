@@ -113,8 +113,10 @@ export function ms(value: string | number): Second {
 /**
  * Format a date string to a readable format
  * @param date - The date string to format
+ * @param locales - The locale to use for formatting (default: 'en-US')
  * @returns The formatted date string
  */
-export const formatDate = (date: string) => {
-  return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(date))
+export const formatDate = (date: string | null | undefined, locales?: string) => {
+  if (!date) return '-'
+  return new Intl.DateTimeFormat(locales ?? 'en-US', { dateStyle: 'medium' }).format(new Date(date))
 }

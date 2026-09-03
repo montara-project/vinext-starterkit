@@ -41,6 +41,7 @@ export default function DateRangePickerInput({
 
   const handleReset = () => {
     setDate(defaultDate)
+    onDateChange(defaultDate)
     setIsPopoverOpen(false)
   }
 

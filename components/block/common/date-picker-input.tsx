@@ -29,7 +29,9 @@ export default function DatePickerInput({
 
   const handleReset = (e: React.MouseEvent<HTMLElement>) => {
     setDate(undefined)
+    onDateChange(undefined)
     e.preventDefault()
+    e.stopPropagation()
   }
 
   const handleSelect = (selected: Date | undefined) => {

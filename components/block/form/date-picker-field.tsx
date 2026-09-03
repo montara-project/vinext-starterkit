@@ -26,7 +26,7 @@ export default function DatePickerField({
   asterisk,
   minDate,
 }: DatePickerFieldProps) {
-  const field = useFieldContext<Date>()
+  const field = useFieldContext<Date | undefined>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
   const isInvalid = !!errors?.length
@@ -40,10 +40,8 @@ export default function DatePickerField({
       <DatePickerInput
         date={field.state.value || defaultValue}
         onDateChange={(date) => {
-          if (date) {
-            field.handleChange(date)
-            onDateChange?.(date)
-          }
+          field.handleChange(date)
+          onDateChange?.(date)
         }}
         placeholder={placeholder}
         minDate={minDate}

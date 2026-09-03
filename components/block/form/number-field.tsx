@@ -6,7 +6,10 @@ import { NumberInput, NumberInputProps } from '@/components/block/common/number-
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { useFieldContext } from '@/hooks/form-context'
 
-interface NumberFieldProps extends NumberInputProps {
+interface NumberFieldProps extends Omit<
+  NumberInputProps,
+  'value' | 'onValueChange' | 'id' | 'name' | 'onBlur'
+> {
   label?: string
   placeholder?: string
   asterisk?: boolean

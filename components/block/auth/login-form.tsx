@@ -34,7 +34,11 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'div'>) 
       setLoading(true)
 
       try {
-        await authClient.signIn.email({ ...value })
+        const result = await authClient.signIn.email({ ...value })
+        if (result.error) {
+          toast.error(result.error.message || 'Sign-in failed')
+          return
+        }
         router.push('/dashboard')
       } catch (error) {
         const message =

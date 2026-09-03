@@ -35,15 +35,19 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'div'
       setLoading(true)
 
       try {
-        await authClient.signUp.email({ ...value })
+        const result = await authClient.signUp.email({ ...value })
+        if (result.error) {
+          toast.error(result.error.message || 'Sign-up failed')
+          return
+        }
         router.push('/dashboard')
+        form.reset()
       } catch (error) {
         const message =
           error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.'
         toast.error(message)
       } finally {
         setLoading(false)
-        form.reset()
       }
     },
   })

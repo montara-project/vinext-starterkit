@@ -11,19 +11,11 @@ import { usePaginationQuery } from '@/hooks/use-pagination-query'
 import { throwAxiosError } from '@/lib/api/axios-error'
 import { Models } from '@/lib/api/models'
 import { services } from '@/lib/api/services'
+import { formatDate } from '@/lib/date'
 import { BaseColumnProps } from '@/types/column'
 
 import RowColumnAction from '../common/row-column-action'
 import SimpleAlertDialog from '../common/simple-alert-dialog'
-
-const formatDate = (date: string | null | undefined) => {
-  if (!date) return '—'
-  try {
-    return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(date))
-  } catch {
-    return '—'
-  }
-}
 
 export function UserColumn({ loading }: BaseColumnProps) {
   const columns = useMemo<ColumnDef<Models.User>[]>(
