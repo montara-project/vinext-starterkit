@@ -10,11 +10,13 @@ export async function GET() {
   const urls = routing.locales.flatMap((locale) =>
     paths.map((path) => {
       const url = `${cleanBase}/${locale}${path}`
-      const alternates = routing.locales
-        .map(
-          (loc) => `    <xhtml:link rel="alternate" hreflang="${loc}" href="${cleanBase}/${loc}" />`
-        )
-        .join('\n')
+      const alternates = [
+        ...routing.locales.map(
+          (loc) =>
+            `    <xhtml:link rel="alternate" hreflang="${loc}" href="${cleanBase}/${loc}${path}" />`
+        ),
+        `    <xhtml:link rel="alternate" hreflang="x-default" href="${cleanBase}${path}" />`,
+      ].join('\n')
 
       return `  <url>
     <loc>${url}</loc>

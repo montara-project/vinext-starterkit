@@ -1,4 +1,4 @@
-import { customType, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { customType, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 // D1's bind() rejects JS Date objects. better-auth's drizzle adapter passes
 // Date objects for createdAt/updatedAt on write, so convert Date -> epoch ms
@@ -9,6 +9,9 @@ const timestamp = customType<{ data: Date | number | null; driverData: number | 
   },
   toDriver(value) {
     return value instanceof Date ? value.getTime() : value
+  },
+  fromDriver(value) {
+    return value === null ? null : new Date(value)
   },
 })
 
@@ -22,6 +25,9 @@ export const user = sqliteTable('user', {
     },
     toDriver(value) {
       return value === true ? 1 : value === false ? 0 : value
+    },
+    fromDriver(value) {
+      return value === 1
     },
   })('emailVerified')
     .notNull()

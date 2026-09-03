@@ -109,3 +109,12 @@ export function ms(value: string | number): Second {
 
   return Math.round(result)
 }
+
+/**
+ * Format a date string to a readable format
+ * @param date - The date string to format
+ * @returns The formatted date string
+ */
+export const formatDate = (date: string) => {
+  return new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(date))
+}

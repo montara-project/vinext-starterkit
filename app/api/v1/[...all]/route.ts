@@ -2,7 +2,7 @@ import { auth } from '@/lib/auth/auth-server'
 import { getDB, getR2 } from '@/lib/db'
 
 type PkType = 'text' | 'number'
-type TimestampFormat = 'iso' | 'unix'
+type TimestampFormat = 'iso' | 'milliseconds'
 
 interface ResourceConfig {
   table: string
@@ -84,7 +84,7 @@ const RESOURCES: Record<string, ResourceConfig> = {
     pkType: 'text',
     columns: ['id', 'name', 'email', 'emailVerified', 'image', 'createdAt', 'updatedAt'],
     searchable: ['name', 'email'],
-    timestamps: 'unix',
+    timestamps: 'milliseconds',
   },
   roles: {
     table: 'roles',
@@ -125,8 +125,39 @@ function requireSession(request: Request) {
   return auth.api.getSession({ headers: request.headers })
 }
 
+type Action = 'read' | 'create' | 'update' | 'delete'
+
+function forbidden() {
+  return json({ error: 'Forbidden' }, 403)
+}
+
+/**
+ * Permission names follow `{resource}:{action}` (e.g. `posts:read`,
+ * `users:create`, `roles:delete`). Access is granted by inserting that name
+ * into `permissions`, linking it to a role in `role_permissions`, and
+ * assigning the role to a user in `user_roles`.
+ */
+function permissionName(resource: string, action: Action): string {
+  return `${resource}:${action}`
+}
+
+async function hasPermission(userId: string, resource: string, action: Action): Promise<boolean> {
+  const row = await getDB()
+    .prepare(
+      `SELECT 1 AS granted
+       FROM "user_roles" ur
+       INNER JOIN "role_permissions" rp ON rp."roleId" = ur."roleId"
+       INNER JOIN "permissions" p ON p."id" = rp."permissionId"
+       WHERE ur."userId" = ? AND p."name" = ?
+       LIMIT 1`
+    )
+    .bind(userId, permissionName(resource, action))
+    .first()
+  return row !== null && row !== undefined
+}
+
 function timestamp(config: ResourceConfig): string | number {
-  return config.timestamps === 'unix' ? Math.floor(Date.now() / 1000) : new Date().toISOString()
+  return config.timestamps === 'milliseconds' ? Date.now() : new Date().toISOString()
 }
 
 export async function GET(request: Request) {
@@ -144,12 +175,15 @@ export async function GET(request: Request) {
     segments[2] === 'media' &&
     segments[3] === 'file'
   ) {
+    if (!(await hasPermission(session.user.id, 'media', 'read'))) return forbidden()
     const key = decodeURIComponent(segments[4])
     const object = await getR2().get(key)
     if (!object) return json({ error: 'Not found' }, 404)
     const headers = new Headers()
     object.writeHttpMetadata(headers)
     headers.set('etag', object.httpEtag)
+    headers.set('X-Content-Type-Options', 'nosniff')
+    headers.set('Content-Disposition', 'attachment')
     return new Response(object.body, { headers })
   }
 
@@ -158,6 +192,8 @@ export async function GET(request: Request) {
 
   const config = RESOURCES[parsed.resource]
   if (!config) return json({ error: `Unknown resource: ${parsed.resource}` }, 404)
+
+  if (!(await hasPermission(session.user.id, parsed.resource, 'read'))) return forbidden()
 
   const db = getDB()
 
@@ -207,6 +243,8 @@ export async function POST(request: Request) {
   const config = RESOURCES[parsed.resource]
   if (!config) return json({ error: `Unknown resource: ${parsed.resource}` }, 404)
 
+  if (!(await hasPermission(session.user.id, parsed.resource, 'create'))) return forbidden()
+
   let body: Record<string, unknown>
   try {
     body = await request.json()
@@ -232,14 +270,17 @@ export async function POST(request: Request) {
   const values = fields.map((field) => record[field])
 
   const db = getDB()
-  await db
+  const result = await db
     .prepare(`INSERT INTO "${config.table}" (${columns}) VALUES (${placeholders})`)
     .bind(...values)
     .run()
 
+  const pkValue =
+    record[config.pk] ?? (config.pkType === 'number' ? result.meta.last_row_id : undefined)
+
   const row = await db
     .prepare(`SELECT * FROM "${config.table}" WHERE "${config.pk}" = ?`)
-    .bind(record[config.pk])
+    .bind(pkValue)
     .first()
   return json(row, 201)
 }
@@ -254,6 +295,8 @@ export async function PUT(request: Request) {
 
   const config = RESOURCES[parsed.resource]
   if (!config) return json({ error: `Unknown resource: ${parsed.resource}` }, 404)
+
+  if (!(await hasPermission(session.user.id, parsed.resource, 'update'))) return forbidden()
 
   let body: Record<string, unknown>
   try {
@@ -305,6 +348,8 @@ export async function DELETE(request: Request) {
 
   const config = RESOURCES[parsed.resource]
   if (!config) return json({ error: `Unknown resource: ${parsed.resource}` }, 404)
+
+  if (!(await hasPermission(session.user.id, parsed.resource, 'delete'))) return forbidden()
 
   const db = getDB()
   const existing = await db

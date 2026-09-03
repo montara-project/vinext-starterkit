@@ -20,16 +20,8 @@ import { Button } from '@/components/ui/button'
 import { usePaginationQuery } from '@/hooks/use-pagination-query'
 import { Models } from '@/lib/api/models'
 import { services } from '@/lib/api/services'
-
-const formatDate = (date: string) =>
-  new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(new Date(date))
-
-const formatSize = (size?: number) => {
-  if (!size) return '—'
-  if (size < 1024) return `${size} B`
-  if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`
-  return `${(size / (1024 * 1024)).toFixed(1)} MB`
-}
+import { formatDate } from '@/lib/date'
+import { formatByteSize } from '@/lib/number'
 
 export function MediaLibrary() {
   const { offset, limit } = usePaginationQuery()
@@ -76,7 +68,7 @@ export function MediaLibrary() {
                 <p className="truncate text-sm font-medium">{item.name}</p>
                 <p className="text-muted-foreground text-xs">{item.type}</p>
                 <p className="text-muted-foreground text-xs">
-                  {formatSize(item.size)} &middot; {formatDate(item.createdAt)}
+                  {formatByteSize(item.size)} &middot; {formatDate(item.createdAt)}
                 </p>
               </div>
               <AlertDialog>

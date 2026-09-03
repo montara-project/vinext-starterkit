@@ -2,9 +2,11 @@
 
 import { UploadCloud, X } from 'lucide-react'
 import { useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { env } from '@/config/env'
+import { formatByteSize } from '@/lib/number'
 
 interface SelectedFile {
   file: File
@@ -12,12 +14,6 @@ interface SelectedFile {
   size: number
   type: string
   preview: string | null
-}
-
-const formatSize = (size: number) => {
-  if (size < 1024) return `${size} B`
-  if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`
-  return `${(size / (1024 * 1024)).toFixed(1)} MB`
 }
 
 export function MediaUpload() {
@@ -42,6 +38,8 @@ export function MediaUpload() {
     e.preventDefault()
     if (files.length === 0) return
     setIsSubmitting(true)
+    let uploadedCount = 0
+
     try {
       for (const item of files) {
         const formData = new FormData()
@@ -50,12 +48,21 @@ export function MediaUpload() {
           method: 'POST',
           body: formData,
         })
-        if (!res.ok) throw new Error('Upload failed')
+        if (!res.ok) continue
+        setFiles((prev) => prev.filter((f) => f !== item))
+        uploadedCount++
       }
-      alert(`Uploaded ${files.length} file(s) successfully.`)
-      setFiles([])
+      if (uploadedCount === files.length) {
+        toast.success(`Uploaded ${uploadedCount} file(s) successfully.`)
+      } else if (uploadedCount > 0) {
+        toast.warning(
+          `Uploaded ${uploadedCount} of ${files.length} file(s). Please retry the remaining files.`
+        )
+      } else {
+        toast.error('Upload failed. Please try again.')
+      }
     } catch {
-      alert('Upload failed. Please try again.')
+      toast.error('Upload failed. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -107,7 +114,7 @@ export function MediaUpload() {
               )}
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{file.name}</p>
-                <p className="text-muted-foreground text-xs">{formatSize(file.size)}</p>
+                <p className="text-muted-foreground text-xs">{formatByteSize(file.size)}</p>
               </div>
               <Button
                 type="button"

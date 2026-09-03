@@ -13,6 +13,17 @@ function requireSession(request: Request) {
   return auth.api.getSession({ headers: request.headers })
 }
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
+
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'image/avif',
+  'application/pdf',
+])
+
 export async function GET(request: Request) {
   const session = await requireSession(request)
   if (!session) return unauthorized()
@@ -61,6 +72,13 @@ export async function POST(request: Request) {
     return json({ error: 'File field "file" is required' }, 400)
   }
 
+  if (file.size > MAX_FILE_SIZE) {
+    return json({ error: 'File exceeds the maximum allowed size' }, 413)
+  }
+  if (!ALLOWED_MIME_TYPES.has(file.type)) {
+    return json({ error: 'File type is not allowed' }, 415)
+  }
+
   const db = getDB()
   const r2 = getR2()
   const id = crypto.randomUUID()
@@ -68,7 +86,7 @@ export async function POST(request: Request) {
   const mimeType = file.type || 'application/octet-stream'
   const key = `${id}-${file.name || 'file'}`
   const uploadedBy = session.user.id
-  const createdAt = new Date().toISOString()
+  const createdAt = Date.now()
   const size = file.size
 
   await r2.put(key, file.stream(), { httpMetadata: { contentType: mimeType } })
