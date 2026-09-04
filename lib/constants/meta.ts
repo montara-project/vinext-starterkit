@@ -1,22 +1,24 @@
 import { Metadata } from 'next'
 
-export const META_URL = 'https://example.com'
-export const META_TITLE = `CMS Admin - Content Management System`
-export const META_DESCRIPTION = `Powerful and intuitive content management system for creating, managing, and publishing digital content. Streamline your workflow with our modern CMS platform.`
-export const META_IMAGE = '/static/images/brand-logo.png'
-export const META_KEYWORDS = `cms, content management, admin panel, dashboard, publishing`
+import { env } from '@/config/env'
 
-const SITE_NAME = 'CMS Admin'
+export const META_URL = env.BETTER_AUTH_URL || 'https://example.com'
+export const META_TITLE = 'CMS Admin'
+export const META_DESCRIPTION =
+  'Powerful and intuitive content management system for creating, managing, and publishing digital content.'
+export const META_IMAGE = '/static/images/brand-logo.png'
+export const META_KEYWORDS = 'cms, content management, admin panel, dashboard, publishing'
 
 export const META: Metadata = {
-  title: META_TITLE,
+  metadataBase: new URL(META_URL),
+  title: { default: META_TITLE, template: `%s | ${META_TITLE}` },
   description: META_DESCRIPTION,
   keywords: META_KEYWORDS,
   openGraph: {
     title: META_TITLE,
     description: META_DESCRIPTION,
     url: META_URL,
-    siteName: SITE_NAME,
+    siteName: META_TITLE,
     images: [
       {
         url: META_IMAGE,
@@ -33,7 +35,7 @@ export const META: Metadata = {
     title: META_TITLE,
     description: META_DESCRIPTION,
     site: META_URL,
-    creator: SITE_NAME,
+    creator: META_TITLE,
     images: [META_IMAGE],
   },
   icons: {
@@ -45,4 +47,4 @@ export const META: Metadata = {
       url: '/favicon/favicon.ico',
     },
   },
-} as const
+}

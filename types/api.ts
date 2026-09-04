@@ -29,13 +29,13 @@ export type Metadata = {
 // For Multiple Response
 export type ApiListResponse<TData, TMeta extends Metadata = Metadata> = {
   data: TData[]
-  meta: TMeta
+  metadata: TMeta
 }
 
 // For Single Response
 export type ApiItemResponse<TData, TMeta extends Metadata = Metadata> = {
   data: TData
-  meta: TMeta
+  metadata: TMeta
   message?: string
 }
 

@@ -11,7 +11,7 @@ interface RichTextEditorProps {
   initialHtml?: string
   onChange?: (html: string) => void
   editorKey?: string | number
-  hasError?: string
+  hasError?: boolean
   className?: string
   placeholder?: string
 }

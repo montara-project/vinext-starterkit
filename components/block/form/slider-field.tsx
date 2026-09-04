@@ -8,9 +8,10 @@ import { useFieldContext } from '@/hooks/form-context'
 
 interface SwitchFieldProps {
   label?: string
+  asterisk?: boolean
 }
 
-export default function SliderField({ label }: SwitchFieldProps) {
+export default function SliderField({ label, asterisk = false }: SwitchFieldProps) {
   const field = useFieldContext<number>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
@@ -18,7 +19,10 @@ export default function SliderField({ label }: SwitchFieldProps) {
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
       <SliderComponent
         id={label}
         onBlur={field.handleBlur}

@@ -10,17 +10,17 @@ import { Option } from '@/types/select'
 interface ComboboxFieldProps<TData> {
   label: string
   options: Option<TData>[]
-  defaultValue: string
+  defaultValues?: string[]
   onSelect?: (value: string) => void
-  onAdd?: () => void
+  asterisk?: boolean
 }
 
 export default function ComboboxField<TData>({
   label,
   options,
-  defaultValue,
+  defaultValues,
   onSelect,
-  onAdd,
+  asterisk = false,
 }: ComboboxFieldProps<TData>) {
   const field = useFieldContext<string>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
@@ -29,17 +29,19 @@ export default function ComboboxField<TData>({
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
       <ComboboxInput
         label={label}
-        defaultValue={defaultValue}
+        defaultValues={defaultValues || []}
         options={options}
         onBlur={field.handleBlur}
-        onSelect={(value) => {
+        onSelect={(value: any) => {
           field.handleChange(value)
           onSelect?.(value)
         }}
-        onAdd={onAdd}
       />
     </Field>
   )

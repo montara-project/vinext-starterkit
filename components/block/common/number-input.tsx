@@ -5,7 +5,7 @@ import { NumericFormat, PatternFormat } from 'react-number-format'
 
 import { cn } from '@/lib/utils'
 
-interface NumberInputProps {
+export interface NumberInputProps {
   id?: string
   name?: string
   value?: string | number
@@ -22,6 +22,10 @@ interface NumberInputProps {
   format?: string // For pattern format like phone numbers
   mask?: string
   type?: 'numeric' | 'pattern'
+  min?: number
+  minLength?: number
+  max?: number
+  maxLength?: number
 }
 
 const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(

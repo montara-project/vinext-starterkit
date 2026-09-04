@@ -8,9 +8,15 @@ import { useFieldContext } from '@/hooks/form-context'
 
 interface RichTextEditorFieldProps {
   label: string
+  placeholder?: string
+  asterisk?: boolean
 }
 
-export default function RichTextEditorField({ label }: RichTextEditorFieldProps) {
+export default function RichTextEditorField({
+  label,
+  placeholder,
+  asterisk = false,
+}: RichTextEditorFieldProps) {
   const field = useFieldContext<string>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
@@ -18,11 +24,19 @@ export default function RichTextEditorField({ label }: RichTextEditorFieldProps)
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
       <RichTextEditor
         editorKey={field.name}
         initialHtml={field.state.value}
-        onChange={(html) => field.handleChange(html)}
+        hasError={isInvalid}
+        onChange={(html) => {
+          field.handleChange(html)
+          field.handleBlur()
+        }}
+        placeholder={placeholder}
       />
 
       {isInvalid && <FieldError errors={field.state.meta.errors} />}

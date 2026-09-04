@@ -1,6 +1,7 @@
 'use client'
 
 import { GalleryVerticalEnd } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 import {
@@ -27,6 +28,7 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
 
 export default function AppSidebar({ auth, role = 'editor', ...props }: AppSidebarProps) {
   const menu = getSidebarMenu(role)
+  const t = useTranslations('sidebar')
 
   const user = {
     name: auth.user.fullname,
@@ -45,8 +47,8 @@ export default function AppSidebar({ auth, role = 'editor', ...props }: AppSideb
                   <GalleryVerticalEnd className="size-4" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-medium">CMS Admin</span>
-                  <span className="">Content Management</span>
+                  <span className="font-medium">{t('cmsAdmin')}</span>
+                  <span className="">{t('contentManagement')}</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -54,10 +56,12 @@ export default function AppSidebar({ auth, role = 'editor', ...props }: AppSideb
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain title="Platform" items={menu.navMain} />
+        <NavMain title={t('platform')} items={menu.navMain} />
 
-        {menu.navMarketing.length > 0 && <NavMain title="Marketing" items={menu.navMarketing} />}
-        {menu.navSetting.length > 0 && <NavMain title="Settings" items={menu.navSetting} />}
+        {menu.navMarketing.length > 0 && (
+          <NavMain title={t('marketing')} items={menu.navMarketing} />
+        )}
+        {menu.navSetting.length > 0 && <NavMain title={t('settings')} items={menu.navSetting} />}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />

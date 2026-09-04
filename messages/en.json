@@ -1,0 +1,200 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "content": "Content",
+    "allPosts": "All Posts",
+    "pages": "Pages",
+    "categories": "Categories",
+    "tags": "Tags",
+    "media": "Media",
+    "library": "Library",
+    "upload": "Upload",
+    "users": "Users",
+    "allUsers": "All Users",
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "comments": "Comments",
+    "allComments": "All Comments",
+    "pending": "Pending",
+    "spam": "Spam",
+    "taxonomy": "Taxonomy",
+    "analytics": "Analytics",
+    "overview": "Overview",
+    "traffic": "Traffic",
+    "contentPerformance": "Content Performance",
+    "administration": "Administration",
+    "systemUsers": "System Users",
+    "rolesPermissions": "Roles & Permissions",
+    "activityLog": "Activity Log",
+    "settings": "Settings",
+    "general": "General",
+    "seo": "SEO",
+    "appearance": "Appearance",
+    "platform": "Platform",
+    "marketing": "Marketing",
+    "cmsAdmin": "CMS Admin",
+    "contentManagement": "Content Management"
+  },
+  "navUser": {
+    "account": "Account",
+    "billing": "Billing",
+    "notifications": "Notifications",
+    "logOut": "Log out"
+  },
+  "home": {
+    "heroBadge": "vinext + Cloudflare Workers",
+    "heroTitle": "Build Next.js-style apps on the edge.",
+    "heroSubtitle": "A Next.js-style App Router starterkit wired for vinext, Tailwind CSS, and Cloudflare Workers.",
+    "signIn": "Sign in",
+    "develop": "Develop",
+    "developDesc": "Run the vinext dev server locally.",
+    "build": "Build",
+    "buildDesc": "Create Worker-ready production output.",
+    "deploy": "Deploy",
+    "deployDesc": "Ship the generated Worker with Wrangler.",
+    "workflowTitle": "From local dev to the edge.",
+    "workflowDesc": "Three commands take you from a local dev server to a deployed Worker.",
+    "apiRoute": "API route",
+    "linkVinext": "vinext",
+    "linkWorkers": "Workers"
+  },
+  "auth": {
+    "branding": "Vinext Starterkit",
+    "welcome": "Welcome to Vinext Starterkit",
+    "dontHaveAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "name": "Full Name",
+    "namePlaceholder": "John Doe",
+    "createAccount": "Create Account",
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "login": "Login",
+    "or": "Or",
+    "continueWithGoogle": "Continue with Google",
+    "terms": "By clicking continue, you agree to our",
+    "and": "and",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "dashboard": {
+    "welcome": "Welcome back, {name}",
+    "totalPosts": "Total Posts",
+    "categories": "Categories",
+    "media": "Media",
+    "comments": "Comments",
+    "quickActions": "Quick Actions",
+    "newPost": "New Post",
+    "uploadMedia": "Upload Media",
+    "manageUsers": "Manage Users",
+    "settings": "Settings"
+  },
+  "pages": {
+    "posts": { "title": "Posts", "subtitle": "Manage blog posts" },
+    "pages": { "title": "Pages", "subtitle": "Manage static pages" },
+    "categories": { "title": "Categories", "subtitle": "Manage content categories" },
+    "tags": { "title": "Tags", "subtitle": "Manage content tags" },
+    "mediaLibrary": { "title": "Media Library", "subtitle": "Browse and manage uploaded media" },
+    "mediaUpload": { "title": "Upload Media", "subtitle": "Upload new media files to the library" },
+    "users": { "title": "Users", "subtitle": "Manage system users and their roles" },
+    "roles": { "title": "Roles", "subtitle": "Manage user roles" },
+    "permissions": { "title": "Permissions", "subtitle": "View role-permission assignments" },
+    "comments": { "title": "Comments", "subtitle": "Review and moderate comments" },
+    "analytics": { "title": "Analytics", "subtitle": "Overview of your site performance" },
+    "settingsGeneral": {
+      "title": "General Settings",
+      "subtitle": "Configure the basic information of your site"
+    },
+    "settingsSeo": { "title": "SEO Settings", "subtitle": "Optimize your site for search engines" },
+    "settingsAppearance": {
+      "title": "Appearance",
+      "subtitle": "Customize the look and feel of your site"
+    }
+  },
+  "legal": {
+    "lastUpdated": "Last updated: {date}",
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "Vinext Starterkit (\"we\", \"us\", or \"our\") operates the website and the CMS platform. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.",
+      "sections": [
+        {
+          "heading": "1. Information We Collect",
+          "body": "We may collect personal information that you voluntarily provide when you register an account, such as your name and email address. When you use the platform, we also collect usage data such as the pages you visit, the content you create, and the media files you upload."
+        },
+        {
+          "heading": "2. How We Use Your Information",
+          "body": "We use the information we collect to provide, maintain, and improve our services; to authenticate you and manage your account; to process your requests; and to send you important administrative or security notices."
+        },
+        {
+          "heading": "3. Cookies and Tracking",
+          "body": "We use cookies and similar technologies to keep you signed in, remember your preferences (such as the sidebar state), and understand how our services are used. You can control cookies through your browser settings."
+        },
+        {
+          "heading": "4. Data Storage and Security",
+          "body": "Your data is stored on Cloudflare D1 and R2 infrastructure. We implement reasonable technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure."
+        },
+        {
+          "heading": "5. Third-Party Services",
+          "body": "We rely on third-party service providers, including Cloudflare and Google (for authentication), to operate our platform. These providers may process data in accordance with their own privacy policies."
+        },
+        {
+          "heading": "6. Your Rights",
+          "body": "You may access, correct, update, or delete your account information at any time through your account settings or by contacting us. You may also object to or restrict certain processing of your personal information where applicable by law."
+        },
+        {
+          "heading": "7. Changes to This Policy",
+          "body": "We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new policy on this page. You are advised to review this policy periodically."
+        },
+        {
+          "heading": "8. Contact Us",
+          "body": "If you have any questions about this Privacy Policy, please contact us through the contact information provided on our website."
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "intro": "These Terms of Service (\"Terms\") govern your access to and use of the Vinext Starterkit website and platform. By creating an account or using our services, you agree to be bound by these Terms.",
+      "sections": [
+        {
+          "heading": "1. Acceptance of Terms",
+          "body": "By accessing or using the platform, you agree to these Terms. If you do not agree to all of these Terms, you may not access or use the services."
+        },
+        {
+          "heading": "2. Accounts and Registration",
+          "body": "To use certain features of the platform, you must register an account. You are responsible for maintaining the confidentiality of your credentials and for all activities that occur under your account. You agree to provide accurate and complete information."
+        },
+        {
+          "heading": "3. Acceptable Use",
+          "body": "You agree not to use the platform to: violate any applicable law; infringe the rights of others; upload malicious content or code; attempt to gain unauthorized access to the platform; or interfere with the operation of the service."
+        },
+        {
+          "heading": "4. Content Ownership",
+          "body": "You retain all rights to the content you create and publish through the platform. By publishing content, you grant us a non-exclusive, royalty-free license to host, store, and display that content in connection with providing the service."
+        },
+        {
+          "heading": "5. Service Availability",
+          "body": "We strive to keep the platform available at all times, but we do not guarantee uninterrupted or error-free service. The platform is provided on an \"as is\" and \"as available\" basis."
+        },
+        {
+          "heading": "6. Limitation of Liability",
+          "body": "To the maximum extent permitted by law, Vinext Starterkit shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly."
+        },
+        {
+          "heading": "7. Termination",
+          "body": "We may suspend or terminate your access to the platform at any time, with or without notice, for conduct that we believe violates these Terms or is harmful to other users or the service."
+        },
+        {
+          "heading": "8. Governing Law",
+          "body": "These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles."
+        },
+        {
+          "heading": "9. Contact Us",
+          "body": "If you have any questions about these Terms, please contact us through the contact information provided on our website."
+        }
+      ]
+    }
+  }
+}

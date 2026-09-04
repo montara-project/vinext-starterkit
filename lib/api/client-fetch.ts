@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
-import { isEmpty } from 'lodash'
 
-import { authClient, getAccessToken } from '../auth/auth-client'
+import { authClient } from '../auth/auth-client'
 import { AUTH_STORAGE_KEYS } from '../constants/auth'
 import { ms } from '../date'
 
@@ -19,26 +18,6 @@ interface CreateAxiosProps {
  */
 function createAxios({ baseURL, storageKey }: CreateAxiosProps) {
   const axiosInstance = axios.create({ baseURL, timeout })
-
-  // Interceptor Request
-  if (storageKey && !isEmpty(storageKey)) {
-    axiosInstance.interceptors.request.use(async (config) => {
-      const currentConfig = { ...config }
-
-      const accessToken = await getAccessToken()
-
-      // Check Session if exists
-      if (accessToken) {
-        try {
-          currentConfig.headers.Authorization = `Bearer ${accessToken}`
-        } catch (error) {
-          console.error(error)
-        }
-      }
-
-      return currentConfig
-    })
-  }
 
   // Interceptor Response
   axiosInstance.interceptors.response.use(

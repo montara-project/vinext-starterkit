@@ -9,9 +9,14 @@ import { useFieldContext } from '@/hooks/form-context'
 interface SwitchFieldProps {
   label?: string
   onCheckedChange: (checked: boolean) => void
+  asterisk?: boolean
 }
 
-export default function SwitchField({ label, onCheckedChange }: SwitchFieldProps) {
+export default function SwitchField({
+  label,
+  onCheckedChange,
+  asterisk = false,
+}: SwitchFieldProps) {
   const field = useFieldContext<boolean>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
@@ -19,7 +24,12 @@ export default function SwitchField({ label, onCheckedChange }: SwitchFieldProps
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      {label && (
+        <FieldLabel htmlFor={field.name} className="gap-1">
+          {label}
+          {asterisk && <span className="text-destructive">*</span>}
+        </FieldLabel>
+      )}
       <SwitchComponent
         id={label}
         onBlur={field.handleBlur}

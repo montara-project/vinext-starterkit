@@ -1,7 +1,10 @@
 import { betterAuth } from 'better-auth'
+import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { nextCookies } from 'better-auth/next-js'
 
 import { env } from '@/config/env'
+import { getDrizzle } from '@/lib/db'
+import { user, session, account, verification } from '@/lib/db/schema'
 
 const ONE_HOUR = 60 * 60 * 1
 const ONE_DAY = ONE_HOUR * 24
@@ -11,6 +14,11 @@ const ONE_MONTH = ONE_DAY * 30
 export const auth = betterAuth({
   baseURL: env.BETTER_AUTH_URL,
   secret: env.BETTER_AUTH_SECRET,
+  database: drizzleAdapter(getDrizzle(), {
+    provider: 'sqlite',
+    schema: { user, session, account, verification },
+  }),
+  emailAndPassword: { enabled: true },
   plugins: [nextCookies()],
   socialProviders: {
     google: {
@@ -21,17 +29,16 @@ export const auth = betterAuth({
     },
   },
   session: {
-    expiresIn: ONE_MONTH, // 30 days in seconds
-    updateAge: ONE_WEEK, // Refresh every 7 days
+    expiresIn: ONE_MONTH,
+    updateAge: ONE_WEEK,
     cookieCache: {
       enabled: true,
-      maxAge: ONE_DAY, // Cache for 1 week
+      maxAge: ONE_DAY,
       strategy: 'jwe',
-      refreshCache: true, // Enable stateless refresh
+      refreshCache: true,
     },
     account: {
       storeStateStrategy: 'cookie',
-      storeAccountCookie: true, // Store account data after OAuth flow in a cookie (useful for database-less flows)
     },
   },
 })

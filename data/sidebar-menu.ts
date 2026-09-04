@@ -93,22 +93,9 @@ const NAV_USERS: NavMainItem = {
 
 const NAV_COMMENTS: NavMainItem = {
   title: 'Comments',
-  url: '#',
+  url: '/comments',
   icon: IconMessage,
-  items: [
-    {
-      title: 'All Comments',
-      url: '/comments',
-    },
-    {
-      title: 'Pending',
-      url: '/comments/pending',
-    },
-    {
-      title: 'Spam',
-      url: '/comments/spam',
-    },
-  ],
+  items: [],
 }
 
 const NAV_TAXONOMY: NavMainItem = {
@@ -118,33 +105,20 @@ const NAV_TAXONOMY: NavMainItem = {
   items: [
     {
       title: 'Categories',
-      url: '/taxonomy/categories',
+      url: '/content/categories',
     },
     {
       title: 'Tags',
-      url: '/taxonomy/tags',
+      url: '/content/tags',
     },
   ],
 }
 
 const NAV_ANALYTICS: NavMainItem = {
   title: 'Analytics',
-  url: '#',
+  url: '/analytics',
   icon: IconChartBar,
-  items: [
-    {
-      title: 'Overview',
-      url: '/analytics/overview',
-    },
-    {
-      title: 'Traffic',
-      url: '/analytics/traffic',
-    },
-    {
-      title: 'Content Performance',
-      url: '/analytics/content',
-    },
-  ],
+  items: [],
 }
 
 const NAV_ADMINISTRATION: NavMainItem = {
@@ -154,15 +128,11 @@ const NAV_ADMINISTRATION: NavMainItem = {
   items: [
     {
       title: 'System Users',
-      url: '/admin/users',
+      url: '/users',
     },
     {
       title: 'Roles & Permissions',
-      url: '/admin/roles',
-    },
-    {
-      title: 'Activity Log',
-      url: '/admin/activity-log',
+      url: '/users/roles',
     },
   ],
 }

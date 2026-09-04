@@ -8,9 +8,10 @@ import { useFieldContext } from '@/hooks/form-context'
 
 interface RatingFieldProps {
   label?: string
+  asterisk?: boolean
 }
 
-export default function RatingField({ label }: RatingFieldProps) {
+export default function RatingField({ label, asterisk = false }: RatingFieldProps) {
   const field = useFieldContext<number>()
   const errors = useSelector(field.store, (state) => state.meta.errors)
 
@@ -18,7 +19,10 @@ export default function RatingField({ label }: RatingFieldProps) {
 
   return (
     <Field data-invalid={isInvalid}>
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name} className="gap-1">
+        {label}
+        {asterisk && <span className="text-destructive">*</span>}
+      </FieldLabel>
       <Rating
         rating={field.state.value}
         editable={true}
